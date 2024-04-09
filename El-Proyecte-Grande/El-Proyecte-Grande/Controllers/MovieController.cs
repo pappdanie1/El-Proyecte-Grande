@@ -41,4 +41,22 @@ public class MovieController : ControllerBase
 
         return Ok(movie);
     }
+    
+    [HttpPatch("{movieId}")]
+    public IActionResult UpdateMovie([FromRoute] int movieId, [FromBody] Movie updatedMovie)
+    {
+        var existingMovie = _movieRepository.GetAll().FirstOrDefault(m => m.Id == movieId);
+        if (existingMovie == null)
+        {
+            return NotFound("Movie not found");
+        }
+
+        var updated = _movieRepository.UpdateMovie(movieId, updatedMovie);
+        if (updated == null)
+        {
+            return BadRequest("Failed to update movie");
+        }
+
+        return Ok(updated);
+    }
 }

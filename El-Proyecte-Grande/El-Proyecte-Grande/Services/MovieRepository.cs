@@ -40,4 +40,19 @@ public class MovieRepository : IMovieRepository
 
         return null;
     }
+    
+    public Movie UpdateMovie(int id, Movie updatedMovie)
+    {
+        var movieToUpdate = _movies.FirstOrDefault(m => m.Id == id);
+        if (movieToUpdate != null)
+        {
+            movieToUpdate.Title = updatedMovie.Title;
+            movieToUpdate.Director = updatedMovie.Director;
+            movieToUpdate.Cast = updatedMovie.Cast;
+            movieToUpdate.Description = updatedMovie.Description;
+            movieToUpdate.DurationInSec = updatedMovie.DurationInSec;
+        }
+
+        return movieToUpdate;
+    }
 }
