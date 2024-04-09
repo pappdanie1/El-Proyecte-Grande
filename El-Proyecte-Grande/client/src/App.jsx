@@ -6,7 +6,7 @@ function App() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:5229/WeatherForecast')
+            const response = await fetch('http://localhost:5229/Movie')
             const jsonData = await response.json()
             setData(jsonData)
         }
@@ -18,7 +18,7 @@ function App() {
             <div>
                 {data.map((item, index) => (
                     <div key={index}>
-                        <h2>{item.date}</h2>
+                        <h2>{item.title}</h2>
                     </div>
                 ))}
             </div>
