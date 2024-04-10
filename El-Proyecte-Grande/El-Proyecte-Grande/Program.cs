@@ -9,6 +9,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IMovieRepository, MovieRepository>();
+builder.Services.AddSingleton<IMovieDbApi, MovieDbApi>();
+builder.Services.AddSingleton<IJsonProcessor, JsonProcessor>();
+
 
 //add cors
 builder.Services.AddCors(options =>
