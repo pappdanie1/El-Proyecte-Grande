@@ -5,24 +5,32 @@ namespace El_Proyecte_Grande.Services;
 public class MovieRepository : IMovieRepository
 {
     private List<Movie> _movies;
+    private readonly IMovieDbApi _movieDbApi;
+    private readonly IJsonProcessor _jsonProcessor;
 
-    public MovieRepository()
+    public MovieRepository(IMovieDbApi movieDbApi, IJsonProcessor jsonProcessor)
     {
+        _movieDbApi = movieDbApi;
+        _jsonProcessor = jsonProcessor;
         _movies = new List<Movie>
         {
-            new Movie(1, "Test", "Test", new List<string>{"1", "2"}, "desc", 230),
-            new Movie(2, "Test2", "Test", new List<string>{"1", "2"}, "desc", 230),
-            new Movie(3, "Test3", "Test", new List<string>{"1", "2"}, "desc", 230),
+            new Movie(1, "Test", "Test", new List<string>{"1", "2"}, "desc", 230, null),
+            new Movie(2, "Test2", "Test", new List<string>{"1", "2"}, "desc", 230, null),
+            new Movie(3, "Test3", "Test", new List<string>{"1", "2"}, "desc", 230, null),
         };
     }
 
     public IList<Movie> GetAll()
     {
-        return _movies;
+        var response = _movieDbApi.GetMovies();
+        var data = _jsonProcessor.ProcessMovies(response);
+        return data.ToList();
     }
 
     public Movie AddMovie(Movie movie)
     {
+        var id = _movies.Count + 1;
+        movie.Id = id;
         _movies.Add(movie);
         return movie;
     }
