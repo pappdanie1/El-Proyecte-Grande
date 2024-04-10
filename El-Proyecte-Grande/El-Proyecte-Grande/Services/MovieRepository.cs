@@ -12,19 +12,26 @@ public class MovieRepository : IMovieRepository
     {
         _movieDbApi = movieDbApi;
         _jsonProcessor = jsonProcessor;
-        _movies = new List<Movie>
-        {
-            new Movie(1, "Test", "Test", new List<string>{"1", "2"}, "desc", 230, null),
-            new Movie(2, "Test2", "Test", new List<string>{"1", "2"}, "desc", 230, null),
-            new Movie(3, "Test3", "Test", new List<string>{"1", "2"}, "desc", 230, null),
-        };
+        var response = _movieDbApi.GetMovies();
+        var data = _jsonProcessor.ProcessMovies(response);
+        _movies = data;
     }
 
     public IList<Movie> GetAll()
     {
-        var response = _movieDbApi.GetMovies();
-        var data = _jsonProcessor.ProcessMovies(response);
-        return data.ToList();
+        return _movies;
+    }
+
+    public Movie GetById(int id)
+    {
+        var movie = _movies.Find(movie => movie.Id == id);
+
+        if (movie == null)
+        {
+            return null;
+        }
+
+        return movie;
     }
 
     public Movie AddMovie(Movie movie)
