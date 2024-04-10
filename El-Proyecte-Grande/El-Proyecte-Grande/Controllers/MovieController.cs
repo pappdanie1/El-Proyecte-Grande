@@ -19,42 +19,71 @@ public class MovieController : ControllerBase
     [HttpGet]
     public IActionResult GetAll()
     {
-        return Ok(_movieRepository.GetAll());
+        try
+        {
+            var movies = _movieRepository.GetAll();
+            return Ok(movies);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
     }
 
     [HttpPost]
     public IActionResult AddMovie(Movie movie)
     {
-        return Ok(_movieRepository.AddMovie(movie));
+        try
+        {
+            return Ok(_movieRepository.AddMovie(movie));
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
     }
 
     [HttpDelete("{movieId}")]
     public IActionResult DeleteMovie([FromRoute] int movieId)
     {
-        var movie = _movieRepository.DeleteById(movieId);
-        if (movie == null)
+        try
         {
-            return NotFound("Movie not found");
-        }
+            var movie = _movieRepository.DeleteById(movieId);
+            if (movie == null)
+            {
+                return NotFound("Movie not found");
+            }
 
-        return Ok(movie);
+            return Ok(movie);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
     }
     
     [HttpPatch("{movieId}")]
     public IActionResult UpdateMovie([FromRoute] int movieId, [FromBody] Movie updatedMovie)
     {
-        var existingMovie = _movieRepository.GetAll().FirstOrDefault(m => m.Id == movieId);
-        if (existingMovie == null)
+        try
         {
-            return NotFound("Movie not found");
-        }
+            var existingMovie = _movieRepository.GetAll().FirstOrDefault(m => m.Id == movieId);
+            if (existingMovie == null)
+            {
+                return NotFound("Movie not found");
+            }
 
-        var updated = _movieRepository.UpdateMovie(movieId, updatedMovie);
-        if (updated == null)
+            var updated = _movieRepository.UpdateMovie(movieId, updatedMovie);
+            if (updated == null)
+            {
+                return BadRequest("Failed to update movie");
+            }
+
+            return Ok(updated);
+        }
+        catch (Exception ex)
         {
-            return BadRequest("Failed to update movie");
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
-
-        return Ok(updated);
     }
 }
