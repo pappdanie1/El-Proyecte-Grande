@@ -23,11 +23,9 @@ public class MovieController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddMovie(string title, string director, string cast, string description,
-        int durationInSec)
+    public IActionResult AddMovie(Movie movie)
     {
-        var casts = cast.Split(",").ToList();
-        return Ok(_movieRepository.AddMovie(new Movie(_movieRepository.GetAll().Count + 1, title, director, casts, description, durationInSec)));
+        return Ok(_movieRepository.AddMovie(movie));
     }
 
     [HttpDelete("{movieId}")]
