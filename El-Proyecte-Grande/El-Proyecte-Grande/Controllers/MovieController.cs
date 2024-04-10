@@ -29,6 +29,26 @@ public class MovieController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
+    
+    [HttpGet("{movieId}")]
+    public IActionResult GetScreeningById([FromRoute]int movieId)
+    {
+        try
+        {
+            var movie = _movieRepository.GetById(movieId);
+
+            if (movie == null)
+            {
+                return NotFound("Movie not found");
+            }
+
+            return Ok(movie);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
+    }
 
     [HttpPost]
     public IActionResult AddMovie(Movie movie)
