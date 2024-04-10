@@ -6,7 +6,7 @@ function App() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:5229/Movie')
+            const response = await fetch("http://localhost:5229/Movie")
             const jsonData = await response.json()
             setData(jsonData)
         }
@@ -19,6 +19,7 @@ function App() {
                 {data.map((item, index) => (
                     <div key={index}>
                         <h2>{item.title}</h2>
+                        <img src={`https://image.tmdb.org/t/p/w200${item.poster}`} alt={item.title} />
                     </div>
                 ))}
             </div>
