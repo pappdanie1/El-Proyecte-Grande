@@ -23,4 +23,51 @@ public class ScreeningRepository : IScreeningRepository
     {
         return Screenings;
     }
+
+    public Screening OneScreening(int id)
+    {
+        Screening screening = Screenings.Find(screen => screen.Id == id);
+
+        if (screening == null)
+        {
+            return null;
+        }
+
+        return screening;
+    }
+
+    public Screening PostScreening(Screening screening)
+    {
+        screening.Id = Screenings.Count + 1;
+        Screenings.Add(screening);
+        return screening;
+    }
+
+    public Screening DeleteScreening(int id)
+    {
+        Screening screening = Screenings.Find(screen => screen.Id == id);
+
+        if (screening == null)
+        {
+            return null;
+        }
+        Screenings.Remove(screening);
+
+        return screening;
+    }
+
+    public Screening UpdateScreening(int screeningId, Screening screening)
+    {
+        var screeningToUpdate = Screenings.Find(screen => screen.Id == screeningId);
+
+        if (screeningToUpdate != null)
+        {
+            screeningToUpdate.Movie = screening.Movie;
+            screeningToUpdate.Auditorium = screening.Auditorium;
+            screeningToUpdate.Start = screening.Start;
+        }
+
+        return screening;
+    }
+    
 }
