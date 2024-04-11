@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pappd\\Desktop\\el-proyecte-grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj": {}
+    "C:\\Users\\andreanichter\\RiderProjects\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pappd\\Desktop\\el-proyecte-grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj": {
+    "C:\\Users\\andreanichter\\RiderProjects\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pappd\\Desktop\\el-proyecte-grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj",
+        "projectUniqueName": "C:\\Users\\andreanichter\\RiderProjects\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj",
         "projectName": "El-Proyecte-Grande",
-        "projectPath": "C:\\Users\\pappd\\Desktop\\el-proyecte-grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj",
-        "packagesPath": "C:\\Users\\pappd\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pappd\\Desktop\\el-proyecte-grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\obj\\",
+        "projectPath": "C:\\Users\\andreanichter\\RiderProjects\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj",
+        "packagesPath": "C:\\Users\\andreanichter\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\andreanichter\\RiderProjects\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\pappd\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\andreanichter\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
