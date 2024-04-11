@@ -17,7 +17,7 @@ public class MovieController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public ActionResult<List<Movie>> GetAll()
     {
         try
         {
@@ -31,7 +31,7 @@ public class MovieController : ControllerBase
     }
     
     [HttpGet("{movieId}")]
-    public IActionResult GetScreeningById([FromRoute]int movieId)
+    public ActionResult<Movie> GetMovieById([FromRoute]int movieId)
     {
         try
         {
@@ -51,7 +51,7 @@ public class MovieController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddMovie(Movie movie)
+    public ActionResult<Movie> AddMovie(Movie movie)
     {
         try
         {
@@ -64,7 +64,7 @@ public class MovieController : ControllerBase
     }
 
     [HttpDelete("{movieId}")]
-    public IActionResult DeleteMovie([FromRoute] int movieId)
+    public ActionResult<Movie> DeleteMovie([FromRoute] int movieId)
     {
         try
         {
@@ -83,7 +83,7 @@ public class MovieController : ControllerBase
     }
     
     [HttpPatch("{movieId}")]
-    public IActionResult UpdateMovie([FromRoute] int movieId, [FromBody] Movie updatedMovie)
+    public ActionResult<Movie> UpdateMovie([FromRoute] int movieId, [FromBody] Movie updatedMovie)
     {
         try
         {
