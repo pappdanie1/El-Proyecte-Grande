@@ -1,4 +1,6 @@
+using El_Proyecte_Grande.Data;
 using El_Proyecte_Grande.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,14 +10,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddSingleton<IMovieDbApi, MovieDbApi>();
 builder.Services.AddSingleton<IJsonProcessor, JsonProcessor>();
-builder.Services.AddSingleton<IScreeningRepository, ScreeningRepository>();
+builder.Services.AddScoped<IScreeningRepository, ScreeningRepository>();
+builder.Services.AddDbContext<ElProyecteGrandeContext>();
 
 
 //add cors
-builder.Services.AddCors(options =>
+/*builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
         policy =>
@@ -25,7 +28,7 @@ builder.Services.AddCors(options =>
                 .AllowAnyHeader();
         });
 });
-
+*/
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,11 +38,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseRouting();
 
-app.UseRouting();
-
-app.UseCors();
+//app.UseCors();
 
 app.UseAuthorization();
 
