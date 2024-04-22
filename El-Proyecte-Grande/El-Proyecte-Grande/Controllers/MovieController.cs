@@ -10,19 +10,36 @@ namespace El_Proyecte_Grande.Controllers;
 public class MovieController : ControllerBase
 {
     private readonly IMovieRepository _movieRepository;
+    private readonly IMovieDbApi _movieDbApi;
+    private readonly IJsonProcessor _jsonProcessor;
 
-    public MovieController(IMovieRepository movieRepository)
+    public MovieController(IMovieRepository movieRepository, IMovieDbApi movieDbApi, IJsonProcessor jsonProcessor)
     {
         _movieRepository = movieRepository;
+        _movieDbApi = movieDbApi;
+        _jsonProcessor = jsonProcessor;
     }
 
     [HttpGet]
-    public ActionResult<List<Movie>> GetAll()
+    public async Task<ActionResult<List<Movie>>> GetAll()
     {
         try
         {
-            var movies = _movieRepository.GetAll();
-            return Ok(movies);
+            var movieDb = _movieRepository.GetAll();
+            if (movieDb.Count != 0)
+            {
+                return Ok(movieDb);
+            }
+            else
+            {
+                var movies = await _movieDbApi.GetMovies();
+                var processedMovies = _jsonProcessor.ProcessMovies(movies);
+                foreach (var movie in processedMovies)
+                {
+                    _movieRepository.AddMovie(movie);
+                }
+                return Ok(processedMovies);
+            }
         }
         catch (Exception ex)
         {
@@ -51,11 +68,12 @@ public class MovieController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Movie> AddMovie(Movie movie)
+    public ActionResult AddMovie(Movie movie)
     {
         try
         {
-            return Ok(_movieRepository.AddMovie(movie));
+            _movieRepository.AddMovie(movie);
+            return Ok(movie);
         }
         catch (Exception ex)
         {
@@ -68,7 +86,8 @@ public class MovieController : ControllerBase
     {
         try
         {
-            var movie = _movieRepository.DeleteById(movieId);
+            var movie = _movieRepository.GetById(movieId);
+            _movieRepository.DeleteById(movieId);
             if (movie == null)
             {
                 return NotFound("Movie not found");
@@ -82,18 +101,20 @@ public class MovieController : ControllerBase
         }
     }
     
-    [HttpPatch("{movieId}")]
-    public ActionResult<Movie> UpdateMovie([FromRoute] int movieId, [FromBody] Movie updatedMovie)
+    [HttpPatch]
+    public ActionResult<Movie> UpdateMovie(Movie movie)
     {
         try
         {
-            var existingMovie = _movieRepository.GetAll().FirstOrDefault(m => m.Id == movieId);
+            var existingMovie = _movieRepository.GetAll().FirstOrDefault(m => m.Id == movie.Id);
             if (existingMovie == null)
             {
                 return NotFound("Movie not found");
             }
 
-            var updated = _movieRepository.UpdateMovie(movieId, updatedMovie);
+            _movieRepository.UpdateMovie(movie);
+            var updated = _movieRepository.GetById(movie.Id);
+            ;
             if (updated == null)
             {
                 return BadRequest("Failed to update movie");

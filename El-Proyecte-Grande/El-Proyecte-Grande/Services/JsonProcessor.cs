@@ -21,15 +21,14 @@ public class JsonProcessor : IJsonProcessor
                 break;
             }
             var item = new Movie
-            (
-                movie.GetProperty("id").GetInt32(),
-                movie.GetProperty("original_title").GetString(),
-                null,
-                null,
-                movie.GetProperty("overview").GetString(),
-                null,
-                movie.GetProperty("poster_path").GetString()
-            );
+                {
+                Title = movie.GetProperty("original_title").GetString(),
+                Director = null,
+                Cast = null,
+                Description = movie.GetProperty("overview").GetString(),
+                DurationInSec = null,
+                Poster = movie.GetProperty("poster_path").GetString()
+            };
             movies.Add(item);
             movieCount++;
         }
