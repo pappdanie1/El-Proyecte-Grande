@@ -7,11 +7,4 @@ public class Screening
     public Auditorium? Auditorium { get; set; }
     public DateTime Start { get; set; }
     
-    public Screening(int id, Movie movie, Auditorium? auditorium, DateTime start)
-    {
-        Id = id;
-        Movie = movie;
-        Auditorium = auditorium;
-        Start = start;
-    }
 }

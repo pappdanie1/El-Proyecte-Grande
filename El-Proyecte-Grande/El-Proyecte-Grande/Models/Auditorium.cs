@@ -6,9 +6,4 @@ public class Auditorium
     public string Name { get; set; }
     public int SeatNo { get; set; }
     
-    public Auditorium(string name, int seatNo)
-    {
-        Name = name;
-        SeatNo = seatNo;
-    }
 }

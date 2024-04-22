@@ -7,10 +7,4 @@ public class Seat
     public int Number { get; set; }
     public Auditorium Auditorium { get; set; }
     
-    public Seat(int row, int number, Auditorium auditorium)
-    {
-        Row = row;
-        Number = number;
-        Auditorium = auditorium;
-    }
 }
