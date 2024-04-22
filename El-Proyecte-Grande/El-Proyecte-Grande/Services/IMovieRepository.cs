@@ -6,7 +6,7 @@ public interface IMovieRepository
 {
     IList<Movie> GetAll();
     Movie GetById(int id);
-    Movie AddMovie(Movie movie);
-    Movie DeleteById(int id);
-    Movie UpdateMovie(int id, Movie updatedMovie);
+    void AddMovie(Movie movie);
+    void DeleteById(int id);
+    void UpdateMovie(Movie movie);
 }

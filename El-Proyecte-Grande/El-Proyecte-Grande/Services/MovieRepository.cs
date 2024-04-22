@@ -1,30 +1,25 @@
 using AspCinema.Models;
+using El_Proyecte_Grande.Data;
 
 namespace El_Proyecte_Grande.Services;
 
 public class MovieRepository : IMovieRepository
 {
-    private List<Movie> _movies;
-    private readonly IMovieDbApi _movieDbApi;
-    private readonly IJsonProcessor _jsonProcessor;
+    private readonly ElProyecteGrandeContext _movieDbContext;
 
-    public MovieRepository(IMovieDbApi movieDbApi, IJsonProcessor jsonProcessor)
+    public MovieRepository(ElProyecteGrandeContext context)
     {
-        _movieDbApi = movieDbApi;
-        _jsonProcessor = jsonProcessor;
-        var response = _movieDbApi.GetMovies();
-        var data = _jsonProcessor.ProcessMovies(response);
-        _movies = data;
+        _movieDbContext = context;
     }
 
     public IList<Movie> GetAll()
     {
-        return _movies;
+        return _movieDbContext.Movies.ToList();
     }
 
     public Movie GetById(int id)
     {
-        var movie = _movies.Find(movie => movie.Id == id);
+        var movie = _movieDbContext.Movies.FirstOrDefault(movie => movie.Id == id);
 
         if (movie == null)
         {
@@ -34,40 +29,22 @@ public class MovieRepository : IMovieRepository
         return movie;
     }
 
-    public Movie AddMovie(Movie movie)
+    public void AddMovie(Movie movie)
     {
-        var id = _movies.Count + 1;
-        movie.Id = id;
-        _movies.Add(movie);
-        return movie;
+        _movieDbContext.Add(movie);
+        _movieDbContext.SaveChanges();
     }
 
-    public Movie DeleteById(int id)
+    public void DeleteById(int id)
     {
-        foreach (var movie in _movies)
-        {
-            if (movie.Id == id)
-            {
-                _movies.Remove(movie);
-                return movie;
-            }
-        }
-
-        return null;
+        
+        _movieDbContext.Remove(_movieDbContext.Movies.FirstOrDefault(movie => movie.Id == id));
+        _movieDbContext.SaveChanges();
     }
     
-    public Movie UpdateMovie(int id, Movie updatedMovie)
+    public void UpdateMovie(Movie movie)
     {
-        var movieToUpdate = _movies.FirstOrDefault(m => m.Id == id);
-        if (movieToUpdate != null)
-        {
-            movieToUpdate.Title = updatedMovie.Title;
-            movieToUpdate.Director = updatedMovie.Director;
-            movieToUpdate.Cast = updatedMovie.Cast;
-            movieToUpdate.Description = updatedMovie.Description;
-            movieToUpdate.DurationInSec = updatedMovie.DurationInSec;
-        }
-
-        return movieToUpdate;
+        _movieDbContext.Update(movie);
+        _movieDbContext.SaveChanges();
     }
 }
