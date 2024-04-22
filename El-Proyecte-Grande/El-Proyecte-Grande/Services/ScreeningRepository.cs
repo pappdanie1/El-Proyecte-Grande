@@ -12,9 +12,9 @@ public class ScreeningRepository : IScreeningRepository
         _movieRepository = movieRepository;
         Screenings = new List<Screening>()
         {
-            new Screening(1, _movieRepository.GetAll()[0], null, DateTime.Now),
-            new Screening(2, _movieRepository.GetAll()[1], null, DateTime.Now),
-            new Screening(3, _movieRepository.GetAll()[2], null, DateTime.Now)
+            //new Screening(1, _movieRepository.GetAll()[0], null, DateTime.Now),
+            //new Screening(2, _movieRepository.GetAll()[1], null, DateTime.Now),
+            //new Screening(3, _movieRepository.GetAll()[2], null, DateTime.Now)
         };
         
     }
