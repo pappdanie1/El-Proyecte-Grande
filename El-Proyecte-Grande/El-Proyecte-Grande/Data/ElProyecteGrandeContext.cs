@@ -14,9 +14,25 @@ public class ElProyecteGrandeContext : DbContext
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<Seat> Seats { get; set; }
     
+    private readonly IConfiguration _configuration;
+
+    public ElProyecteGrandeContext(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+    
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=ElProyecteGrande;User Id=sa;Password=Password1234%;Encrypt=false;");
+        string connectionString = _configuration.GetConnectionString("DefaultConnection");
+        optionsBuilder.UseSqlServer(connectionString, options =>
+        {
+            options.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+        });
+    }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Movie>().HasIndex(u => u.Title).IsUnique();
     }
 }
