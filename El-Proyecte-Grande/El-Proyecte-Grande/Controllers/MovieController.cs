@@ -10,14 +10,14 @@ namespace El_Proyecte_Grande.Controllers;
 public class MovieController : ControllerBase
 {
     private readonly IMovieRepository _movieRepository;
-    private readonly IMovieDbApi _movieDbApi;
+    private readonly IOmdbApi _omdbApi;
     private readonly IJsonProcessor _jsonProcessor;
 
-    public MovieController(IMovieRepository movieRepository, IMovieDbApi movieDbApi, IJsonProcessor jsonProcessor)
+    public MovieController(IMovieRepository movieRepository, IJsonProcessor jsonProcessor, IOmdbApi omdbApi)
     {
         _movieRepository = movieRepository;
-        _movieDbApi = movieDbApi;
         _jsonProcessor = jsonProcessor;
+        _omdbApi = omdbApi;
     }
 
     [HttpGet]
@@ -32,7 +32,7 @@ public class MovieController : ControllerBase
             }
             else
             {
-                var movies = await _movieDbApi.GetMovies();
+                var movies = await _omdbApi.GetMovies();
                 var processedMovies = _jsonProcessor.ProcessMovies(movies);
                 foreach (var movie in processedMovies)
                 {
