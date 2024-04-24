@@ -3,12 +3,12 @@ import Movie from "../Components/Movie";
 import Slider from "../Components/Slider";
 import Footer from "../Components/Footer";
 
-const Home = () => {
+const Home = ({data}) => {
   return (
     <>
       <Header />
       <Slider />
-      <Movie />
+      <Movie data={data}/>
       <Footer/>
     </>
   );

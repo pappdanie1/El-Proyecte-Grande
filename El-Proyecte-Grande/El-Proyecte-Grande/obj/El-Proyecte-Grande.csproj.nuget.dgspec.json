@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Codecool\\advanced_modul-asp.net\\ElProyecteGrande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj": {}
+    "C:\\Users\\andreanichter\\RiderProjects\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj": {}
   },
   "projects": {
-    "E:\\Codecool\\advanced_modul-asp.net\\ElProyecteGrande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj": {
+    "C:\\Users\\andreanichter\\RiderProjects\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Codecool\\advanced_modul-asp.net\\ElProyecteGrande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj",
+        "projectUniqueName": "C:\\Users\\andreanichter\\RiderProjects\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj",
         "projectName": "El-Proyecte-Grande",
-        "projectPath": "E:\\Codecool\\advanced_modul-asp.net\\ElProyecteGrande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj",
-        "packagesPath": "C:\\Users\\Csaba\\.nuget\\packages\\",
-        "outputPath": "E:\\Codecool\\advanced_modul-asp.net\\ElProyecteGrande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\obj\\",
+        "projectPath": "C:\\Users\\andreanichter\\RiderProjects\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande.csproj",
+        "packagesPath": "C:\\Users\\andreanichter\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\andreanichter\\RiderProjects\\El-Proyecte-Grande\\El-Proyecte-Grande\\El-Proyecte-Grande\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Csaba\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\andreanichter\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -41,6 +41,16 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.17, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.14, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.14, )"
             },
             "Moq": {
               "target": "Package",

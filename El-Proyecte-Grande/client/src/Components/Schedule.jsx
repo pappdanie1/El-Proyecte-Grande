@@ -1,6 +1,9 @@
 import "./Component_css/Schedule.css";
+import MovieDropdown from "./MovieDropdown";
 
-const Schedule = () => {
+const Schedule = ({data}) => {
+  
+
   const daysOfWeek = [
     "Monday",
     "Tuesday",
@@ -19,10 +22,10 @@ const Schedule = () => {
             <button key={day}>{day}</button>
           ))}
         </div>
-        <div className="today-info">
-          <p>{new Date().toLocaleDateString('en-US', { weekday: 'long' })}</p>
-          <p>{new Date().toLocaleDateString()}</p>
-        </div>
+      </div>
+      <div className="date-info-container">
+        <p className="date-label">Today's Date:</p>
+        <p className="today-date">{new Date().toLocaleDateString()}</p>
       </div>
     </div>
   );

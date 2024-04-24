@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>El_Proyecte_Grande</RootNamespace>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>04294c19-bfca-4128-af98-b20085c63569</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,6 +18,12 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
         <PackageReference Include="Moq" Version="4.20.70" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

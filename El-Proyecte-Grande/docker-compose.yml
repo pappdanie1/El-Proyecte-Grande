@@ -17,4 +17,13 @@
       - database
     environment:
       CONNECTIONSTRINGS__DEFAULTCONNECTION:  Server=database;Database=ElProyecteGrandeDb;User Id=sa;Password=Qwert1!Asdf2?Yxcv3;Encrypt=false;
-    
+  
+  frontend:
+    image: ${DOCKER_REGISTRY-}frontend
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    ports:
+      - 5173:5173
+    tty: true
+  

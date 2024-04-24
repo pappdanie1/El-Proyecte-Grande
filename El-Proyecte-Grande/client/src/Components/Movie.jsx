@@ -1,50 +1,72 @@
-import { useEffect, useState } from "react";
 import "./Component_css/Movie.css";
 import Schedule from "./Schedule";
+import Loading from "./Loading";
+import MovieDropdown from "./MovieDropdown";
+import { Link } from "react-router-dom";
+import Screenings from "./Screenings";
+import { useState} from "react";
 
-const Movie = () => {
-  const [data, setData] = useState([]);
+const Movie = ({ data }) => {
+  const [selectedMovieId, setSelectedMovieId] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("http://localhost:5229/Movie");
-      const jsonData = await response.json();
-      setData(jsonData);
-    };
-    fetchData();
-  }, []);
-  console.log(data);
+  if (!data) {
+    return <Loading />;
+  }
+
+  const handleSelectMovie = (movieId) => {
+    setSelectedMovieId(movieId);
+  };
+
+  const selectedMovie = data.find(movie => movie.id === parseInt(selectedMovieId));
 
   return (
     <>
-    <h2 className="screenings-title">Screenings</h2>
-    <Schedule/>
-    <div>
-      {data.map((item, index) => (
-        <div className="movie-details-container" key={index}>
+      <h2 className="screenings-title">Screenings</h2>
+      <Schedule data={data} />
+      <MovieDropdown movies={data} onSelectMovie={handleSelectMovie} />
+      {selectedMovieId ? (
+        <div className="movie-details-container">
           <div className="movie-poster">
-            <img
-              src={`https://image.tmdb.org/t/p/w200${item.poster}`}
-              alt={item.title}
-            />
+            <Link to={`/movieDetails/${selectedMovie.id}`}>
+              <img src={selectedMovie.poster} alt={selectedMovie.title} />
+            </Link>
           </div>
           <div className="movie-info">
-            <h2>{item.title}</h2>
+            <Link to={`/movieDetails/${selectedMovie.id}`}>
+              <h2>{selectedMovie.title}</h2>
+            </Link>
             <p>
-              <strong>Genre:</strong> {item.genre}
+              <strong>Genre:</strong> {selectedMovie.genres}
             </p>
             <p>
-              <strong>Runtime:</strong> {item.runtime}
+              <strong>Runtime: </strong> {selectedMovie.durationInSec}
             </p>
-            <div className="screening-times">
-            <button className="screening-time">18:00</button>
-            <button className="screening-time">20:00</button>
-            <button className="screening-time">22:00</button>
-          </div>
+            <Screenings />
           </div>
         </div>
-      ))}
-    </div>
+      ) : (
+        data.map((movie, index) => (
+          <div className="movie-details-container" key={index}>
+            <div className="movie-poster">
+              <Link to={`/movieDetails/${movie.id}`}>
+                <img src={movie.poster} alt={movie.title} />
+              </Link>
+            </div>
+            <div className="movie-info">
+              <Link to={`/movieDetails/${movie.id}`}>
+                <h2>{movie.title}</h2>
+              </Link>
+              <p>
+                <strong>Genre:</strong> {movie.genres}
+              </p>
+              <p>
+                <strong>Runtime: </strong> {movie.durationInSec}
+              </p>
+              <Screenings />
+            </div>
+          </div>
+        ))
+      )}
     </>
   );
 };
