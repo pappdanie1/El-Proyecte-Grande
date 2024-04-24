@@ -20,11 +20,11 @@ public class ScreeningController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAllScreenings()
+    public ActionResult GetAllScreenings()
     {
         try
         {
-            return Ok(_screeningRepository.GetScreenings());
+            return Ok(_screeningRepository.GetAll());
         }
         catch (Exception e)
         {
@@ -33,11 +33,11 @@ public class ScreeningController : ControllerBase
     }
 
     [HttpGet("{screeningId}")]
-    public IActionResult GetScreeningById(int screeningId)
+    public ActionResult<Screening> GetScreeningById([FromRoute]int screeningId)
     {
         try
         {
-            Screening screening = _screeningRepository.OneScreening(screeningId);
+            Screening screening = _screeningRepository.GetById(screeningId);
 
             if (screening == null)
             {
@@ -53,11 +53,12 @@ public class ScreeningController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult PostScreening(Screening screening)
+    public ActionResult PostScreening(Screening screening)
     {
         try
         {
-            return Ok(_screeningRepository.PostScreening(screening));
+            _screeningRepository.AddScreening(screening);
+            return Ok(screening);
         }
         catch (Exception e)
         {
@@ -66,11 +67,19 @@ public class ScreeningController : ControllerBase
     }
 
     [HttpDelete("{screeningId}")]
-    public IActionResult DeleteScreening([FromRoute]int screeningId)
+    public ActionResult<Screening> DeleteScreening([FromRoute]int screeningId)
     {
         try
         {
-            return Ok(_screeningRepository.DeleteScreening(screeningId));
+            var screening = _screeningRepository.GetById(screeningId);
+            _screeningRepository.DeleteById(screeningId);
+            
+            if (screening == null)
+            {
+                return NotFound("Screening not found");
+            }
+
+            return Ok(screening);
         }
         catch (Exception e)
         {
@@ -78,12 +87,14 @@ public class ScreeningController : ControllerBase
         }
     }
 
-    [HttpPatch("{screeningID}")]
-    public IActionResult UpdateScreening(int screeningID, [FromBody]Screening screening)
+    [HttpPatch]
+    public ActionResult<Screening> UpdateScreening(Screening screening)
     {
         try
         {
-            return Ok(_screeningRepository.UpdateScreening(screeningID, screening));
+            _screeningRepository.UpdateScreening(screening);
+            var updatedScreening = _screeningRepository.GetById(screening.Id);
+            return Ok(updatedScreening);
         }
         catch (Exception e)
         {

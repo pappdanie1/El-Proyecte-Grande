@@ -1,73 +1,44 @@
 using AspCinema.Models;
+using El_Proyecte_Grande.Data;
 
 namespace El_Proyecte_Grande.Services;
 
 public class ScreeningRepository : IScreeningRepository
 {
-    private List<Screening> Screenings { get; set; }
-    private readonly IMovieRepository _movieRepository;
-    
-    public ScreeningRepository(IMovieRepository movieRepository)
+    private readonly ElProyecteGrandeContext _movieDbContext;
+
+    public ScreeningRepository(ElProyecteGrandeContext context)
     {
-        _movieRepository = movieRepository;
-        Screenings = new List<Screening>()
-        {
-            //new Screening(1, _movieRepository.GetAll()[0], null, DateTime.Now),
-            //new Screening(2, _movieRepository.GetAll()[1], null, DateTime.Now),
-            //new Screening(3, _movieRepository.GetAll()[2], null, DateTime.Now)
-        };
+        _movieDbContext = context;
+    }
+
+    public IList<Screening> GetAll()
+    {
+        return _movieDbContext.Screenings.ToList();
+    }
+
+    public Screening? GetById(int id)
+    {
+        return _movieDbContext.Screenings.FirstOrDefault(s => s.Id == id);
+    }
+
+    public void AddScreening(Screening screening)
+    {
+        _movieDbContext.Add(screening);
+        _movieDbContext.SaveChanges();
+    }
+
+    public void DeleteById(int id)
+    {
         
+        _movieDbContext.Remove(_movieDbContext.Screenings.FirstOrDefault(s => s.Id == id));
+        _movieDbContext.SaveChanges();
     }
-
-    public List<Screening> GetScreenings()
+    
+    public void UpdateScreening(Screening screening)
     {
-        return Screenings;
-    }
-
-    public Screening OneScreening(int id)
-    {
-        Screening screening = Screenings.Find(screen => screen.Id == id);
-
-        if (screening == null)
-        {
-            return null;
-        }
-
-        return screening;
-    }
-
-    public Screening PostScreening(Screening screening)
-    {
-        screening.Id = Screenings.Count + 1;
-        Screenings.Add(screening);
-        return screening;
-    }
-
-    public Screening DeleteScreening(int id)
-    {
-        Screening screening = Screenings.Find(screen => screen.Id == id);
-
-        if (screening == null)
-        {
-            return null;
-        }
-        Screenings.Remove(screening);
-
-        return screening;
-    }
-
-    public Screening UpdateScreening(int screeningId, Screening screening)
-    {
-        var screeningToUpdate = Screenings.Find(screen => screen.Id == screeningId);
-
-        if (screeningToUpdate != null)
-        {
-            screeningToUpdate.Movie = screening.Movie;
-            screeningToUpdate.Auditorium = screening.Auditorium;
-            screeningToUpdate.Start = screening.Start;
-        }
-
-        return screening;
+        _movieDbContext.Update(screening);
+        _movieDbContext.SaveChanges();
     }
     
 }

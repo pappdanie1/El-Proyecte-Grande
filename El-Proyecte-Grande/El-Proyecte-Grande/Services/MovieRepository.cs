@@ -17,16 +17,9 @@ public class MovieRepository : IMovieRepository
         return _movieDbContext.Movies.ToList();
     }
 
-    public Movie GetById(int id)
+    public Movie? GetById(int id)
     {
-        var movie = _movieDbContext.Movies.FirstOrDefault(movie => movie.Id == id);
-
-        if (movie == null)
-        {
-            return null;
-        }
-
-        return movie;
+        return _movieDbContext.Movies.FirstOrDefault(movie => movie.Id == id);
     }
 
     public void AddMovie(Movie movie)

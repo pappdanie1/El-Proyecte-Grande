@@ -4,13 +4,9 @@ namespace El_Proyecte_Grande.Services;
 
 public interface IScreeningRepository
 {
-    List<Screening> GetScreenings();
-
-    Screening OneScreening(int id);
-
-    Screening PostScreening(Screening screening);
-
-    Screening DeleteScreening(int id);
-
-    Screening UpdateScreening(int screeningId, Screening screening);
+    IList<Screening> GetAll();
+    Screening? GetById(int id);
+    void AddScreening(Screening movie);
+    void DeleteById(int id);
+    void UpdateScreening(Screening movie);
 }
