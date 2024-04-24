@@ -4,5 +4,6 @@ namespace El_Proyecte_Grande.Services;
 
 public interface IJsonProcessor
 {
-    List<Movie> ProcessMovies(string data);
+    List<string> ProcessTitles(string data);
+    List<Movie> ProcessMovies(List<string> data);
 }
