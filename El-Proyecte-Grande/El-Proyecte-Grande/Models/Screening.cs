@@ -6,5 +6,4 @@ public class Screening
     public Movie Movie { get; set; }
     public Auditorium? Auditorium { get; set; }
     public DateTime Start { get; set; }
-    
 }
