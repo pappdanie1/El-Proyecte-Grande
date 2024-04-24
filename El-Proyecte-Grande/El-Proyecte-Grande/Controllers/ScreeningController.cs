@@ -20,10 +20,11 @@ public class ScreeningController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult GetAllScreenings()
+    public async Task<ActionResult> GetAllScreenings()
     {
         try
         {
+            await _screeningRepository.SeedScreenings();
             return Ok(_screeningRepository.GetAll());
         }
         catch (Exception e)
