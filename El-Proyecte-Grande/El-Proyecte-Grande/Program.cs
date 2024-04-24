@@ -13,22 +13,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddSingleton<IMovieDbApi, MovieDbApi>();
 builder.Services.AddSingleton<IJsonProcessor, JsonProcessor>();
+builder.Services.AddSingleton<IOmdbApi, OmdbApi>();
 builder.Services.AddScoped<IScreeningRepository, ScreeningRepository>();
 builder.Services.AddDbContext<ElProyecteGrandeContext>();
 
-
-//add cors
-/*builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:5000", "http://localhost:5229")
-                .AllowAnyMethod()
-                .AllowAnyHeader();
-        });
-});
-*/
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,9 +26,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseRouting();
+app.UseRouting();
 
-//app.UseCors();
+app.UseCors(options => options.AllowAnyOrigin());
 
 app.UseAuthorization();
 
