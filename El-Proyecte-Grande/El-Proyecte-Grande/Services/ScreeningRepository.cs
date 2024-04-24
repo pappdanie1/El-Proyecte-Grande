@@ -8,6 +8,7 @@ namespace El_Proyecte_Grande.Services;
 public class ScreeningRepository : IScreeningRepository
 {
     private readonly ElProyecteGrandeContext _movieDbContext;
+    Random random = new Random();
 
     public ScreeningRepository(ElProyecteGrandeContext context)
     {
@@ -16,7 +17,10 @@ public class ScreeningRepository : IScreeningRepository
 
     public IList<Screening> GetAll()
     {
-        return _movieDbContext.Screenings.ToList();
+        return _movieDbContext.Screenings
+            .Include(s => s.Movie)
+            .Include(s => s.Auditorium)
+            .ToList();
     }
 
     public Screening? GetById(int id)
@@ -43,41 +47,35 @@ public class ScreeningRepository : IScreeningRepository
         _movieDbContext.SaveChanges();
     }
     
-    public async Task SeedScreenings()
+    
+    public async Task<List<Screening>> SeedScreenings()
     {
+        var screenings = new List<Screening>();
         if (!_movieDbContext.Screenings.Any())
         {
-            // Get existing Movies and Auditoriums
             var movies = await _movieDbContext.Movies.ToListAsync();
             var auditoriums = await _movieDbContext.Auditoriums.ToListAsync();
-
-            // Create screening data with references
-            var screenings = new List<Screening>();
-
-            Random random = new Random();
-
-            DateTime startDate = DateTime.Now.AddDays(1);
             
             foreach (var movie in movies)
             {
-                foreach (var auditorium in auditoriums)
+                for (int i = 0; i < 2; i++)
                 {
+                    var auditoriumIndex = random.Next(0, 2);
+                    
                     screenings.Add(new Screening
                     {
                         Movie = movie,
-                        Auditorium = auditoriums[random.Next(0, 4)],
-                        Start = GetDateTime(screenings) // Example: Random start date within next week
+                        Auditorium = auditoriums[auditoriumIndex],
+                        Start = GetDateTime(screenings, auditoriumIndex, movie) 
                     });
                 }
             }
-
-            // Add screenings to the context
-            await _movieDbContext.AddRangeAsync(screenings);
-            await _movieDbContext.SaveChangesAsync();
+            
         }
+        return screenings;
     }
 
-    private DateTime GetDateTime(List<Screening> screenings)
+    private DateTime GetDateTime(List<Screening> screenings, int auditoriumIndex, Movie movie)
     {
         DateTime date = DateTime.Now.AddDays(1);
         
@@ -86,11 +84,28 @@ public class ScreeningRepository : IScreeningRepository
             return new DateTime(date.Year, date.Month, date.Day, 10, 00, 00);
         }
 
-        Screening last = screenings.LastOrDefault();
+        var isLastSameScreening = screenings.Exists(s => s.Movie == movie);
+        var lastSameScreening = screenings.LastOrDefault(s => s.Movie == movie);
+        var isLastSameAuditorium = screenings.Exists(s => s.Auditorium.Id == auditoriumIndex);
+        var lastSameAuditorium = screenings.LastOrDefault(s => s.Auditorium.Id == auditoriumIndex);
+        var lastScreening = screenings.LastOrDefault();
+        DateTime lastStart = lastScreening.Start;
 
-        DateTime lastStart = last.Start;
 
-        if (last.Start.Hour >= 22)
+        if (isLastSameScreening)
+        {
+            if (lastSameScreening.Start.Hour >= 16)
+            {
+                return new DateTime(lastStart.Year, lastStart.Month, lastStart.Day + 1, 10, 00, 00);
+            }
+            else
+            {
+                return new DateTime(lastStart.Year, lastStart.Month, lastStart.Day, lastStart.Hour + 6, 00, 00);
+            }
+            
+
+        }
+        if (lastStart.Hour >= 22)
         {
             return new DateTime(lastStart.Year, lastStart.Month, lastStart.Day + 1, 10, 00, 00);
         }
@@ -103,4 +118,5 @@ public class ScreeningRepository : IScreeningRepository
     //Round hours
     
     
+   
 }

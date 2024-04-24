@@ -38,7 +38,7 @@ public class ElProyecteGrandeContext : DbContext
             new Auditorium { Id = 1, Name = "Audit1", SeatNo = 30 },
             new Auditorium { Id = 2, Name = "Audit2", SeatNo = 30 },
             new Auditorium { Id = 3, Name = "Audit3", SeatNo = 30 },
-            new Auditorium { Id = 4, Name = "Audit5", SeatNo = 30 },
+            new Auditorium { Id = 4, Name = "Audit4", SeatNo = 30 },
             new Auditorium { Id = 5, Name = "Audit5", SeatNo = 30 }
         };
 

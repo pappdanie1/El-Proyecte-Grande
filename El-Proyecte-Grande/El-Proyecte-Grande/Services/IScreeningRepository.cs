@@ -11,5 +11,5 @@ public interface IScreeningRepository
     void DeleteById(int id);
     void UpdateScreening(Screening movie);
 
-    Task SeedScreenings();
+    Task<List<Screening>> SeedScreenings();
 }
