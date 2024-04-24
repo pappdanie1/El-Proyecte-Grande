@@ -30,9 +30,22 @@ public class ElProyecteGrandeContext : DbContext
             options.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
         });
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        List<Auditorium> auditoria = new List<Auditorium>()
+        {
+            new Auditorium { Id = 1, Name = "Audit1", SeatNo = 30 },
+            new Auditorium { Id = 2, Name = "Audit2", SeatNo = 30 },
+            new Auditorium { Id = 3, Name = "Audit3", SeatNo = 30 },
+            new Auditorium { Id = 4, Name = "Audit4", SeatNo = 30 },
+            new Auditorium { Id = 5, Name = "Audit5", SeatNo = 30 }
+        };
+
+
         modelBuilder.Entity<Movie>().HasIndex(u => u.Title).IsUnique();
+    
+        modelBuilder.Entity<Auditorium>().HasData(auditoria);
+        
     }
 }

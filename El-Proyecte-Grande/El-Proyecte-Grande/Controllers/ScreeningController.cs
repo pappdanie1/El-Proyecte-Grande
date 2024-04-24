@@ -20,11 +20,24 @@ public class ScreeningController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult GetAllScreenings()
+    public async Task<ActionResult> GetAllScreenings()
     {
         try
         {
-            return Ok(_screeningRepository.GetAll());
+            var screenings = _screeningRepository.GetAll();
+            if (screenings.Count != 0)
+            {
+                return Ok(screenings);
+            }
+            else
+            {
+                var seeded = await _screeningRepository.SeedScreenings();
+                foreach (var screening in seeded)
+                {
+                    _screeningRepository.AddScreening(screening);
+                }
+                return Ok(seeded);
+            }
         }
         catch (Exception e)
         {
