@@ -21,7 +21,7 @@ const Movie = ({ data, screenings }) => {
 
   return (
     <>
-      <h2 className="screenings-title">Screenings</h2>
+      <h2 className="screenings-title">Now playing</h2>
       <Schedule data={data} />
       <MovieDropdown movies={data} onSelectMovie={handleSelectMovie} />
       {selectedMovieId ? (
