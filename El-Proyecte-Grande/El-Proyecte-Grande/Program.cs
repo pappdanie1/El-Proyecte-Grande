@@ -1,5 +1,6 @@
 using El_Proyecte_Grande.Data;
 using El_Proyecte_Grande.Services;
+using El_Proyecte_Grande.Services.DbSeed;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,9 +12,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<ISeatRepository, SeatRepository>();
 builder.Services.AddSingleton<IMovieDbApi, MovieDbApi>();
 builder.Services.AddSingleton<IJsonProcessor, JsonProcessor>();
 builder.Services.AddSingleton<IOmdbApi, OmdbApi>();
+builder.Services.AddScoped<ISeedScreenings, SeedScreenings>();
+builder.Services.AddScoped<ISeedSeats, SeedSeats>();
 builder.Services.AddScoped<IScreeningRepository, ScreeningRepository>();
 builder.Services.AddDbContext<ElProyecteGrandeContext>();
 
