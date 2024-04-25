@@ -1,11 +1,17 @@
 import "./Component_css/Screenings.css";
 
-function Screenings() {
+function Screenings({ screenings, movie }) {
+
+  console.log(screenings)
+  console.log("----------")
+  console.log(movie)
   return (
     <div className="screening-times">
-      <button className="screening-time">18:00</button>
-      <button className="screening-time">20:00</button>
-      <button className="screening-time">22:00</button>
+      {screenings
+      .filter((s) => s.movie.id === movie.id)
+      .map((screening, index) => (
+        <button className="screening-time" key={index}>{screening.start.split("T")[1].slice(0,5)}</button>
+      ))}
     </div>
   );
 }
