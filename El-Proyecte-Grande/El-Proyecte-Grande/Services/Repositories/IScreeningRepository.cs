@@ -10,6 +10,4 @@ public interface IScreeningRepository
     void AddScreening(Screening movie);
     void DeleteById(int id);
     void UpdateScreening(Screening movie);
-
-    Task<List<Screening>> SeedScreenings();
 }
