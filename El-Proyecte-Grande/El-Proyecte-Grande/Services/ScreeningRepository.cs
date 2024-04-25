@@ -47,76 +47,102 @@ public class ScreeningRepository : IScreeningRepository
         _movieDbContext.SaveChanges();
     }
     
-    
+        //for 7 days
+    /*
     public async Task<List<Screening>> SeedScreenings()
     {
         var screenings = new List<Screening>();
+
+        if (!_movieDbContext.Screenings.Any())
+        {
+            var movies = await _movieDbContext.Movies.ToListAsync();
+            var auditoriums = await _movieDbContext.Auditoriums.ToListAsync();
+
+            // Generate screenings for the next 7 days
+            for (int dayOffset = 1; dayOffset <= 7; dayOffset++)
+            {
+                var tomorrow = DateTime.Today.AddDays(dayOffset);
+
+                var startTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0);
+                var endTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 22, 0, 0);
+
+                //var interval = TimeSpan.FromHours(3);
+
+                var currentAuditoriumIndex = 0;
+
+                foreach (var movie in movies)
+                {
+                    var currentAuditorium = auditoriums[currentAuditoriumIndex];
+
+                    var currentTime = startTime;
+
+                    while (currentTime < endTime)
+                    {
+                        screenings.Add(new Screening
+                        {
+                            Movie = movie,
+                            Auditorium = currentAuditorium,
+                            Start = currentTime
+                        });
+
+                        currentTime = currentTime.AddHours(random.Next(1, 4) * 3);
+                    }
+
+                    currentAuditoriumIndex = (currentAuditoriumIndex + 1) % auditoriums.Count;
+                }
+            }
+        }
+
+        return screenings;
+    }
+    */
+
+    //for 1 day
+
+    public async Task<List<Screening>> SeedScreenings()
+    {
+        var screenings = new List<Screening>();
+
         if (!_movieDbContext.Screenings.Any())
         {
             var movies = await _movieDbContext.Movies.ToListAsync();
             var auditoriums = await _movieDbContext.Auditoriums.ToListAsync();
             
+            var tomorrow = DateTime.Today.AddDays(1);
+            
+            var startTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0);
+            var endTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 22, 0, 0);
+            
+            //var interval = TimeSpan.FromHours(3);
+            
+            var currentAuditoriumIndex = 0;
+
             foreach (var movie in movies)
             {
-                for (int i = 0; i < 2; i++)
+                var currentAuditorium = auditoriums[currentAuditoriumIndex];
+
+                var currentTime = startTime;
+
+                while (currentTime < endTime)
                 {
-                    var auditoriumIndex = random.Next(0, 2);
-                    
+                    // Create a new screening
                     screenings.Add(new Screening
                     {
                         Movie = movie,
-                        Auditorium = auditoriums[auditoriumIndex],
-                        Start = GetDateTime(screenings, auditoriumIndex, movie) 
+                        Auditorium = currentAuditorium,
+                        Start = currentTime
                     });
+                    
+                    currentTime = currentTime.AddHours(random.Next(1, 4) * 3);
                 }
+                
+                currentAuditoriumIndex = (currentAuditoriumIndex + 1) % auditoriums.Count;
             }
-            
         }
+
         return screenings;
     }
-
-    private DateTime GetDateTime(List<Screening> screenings, int auditoriumIndex, Movie movie)
-    {
-        DateTime date = DateTime.Now.AddDays(1);
-        
-        if (screenings.Count == 0)
-        {
-            return new DateTime(date.Year, date.Month, date.Day, 10, 00, 00);
-        }
-
-        var isLastSameScreening = screenings.Exists(s => s.Movie == movie);
-        var lastSameScreening = screenings.LastOrDefault(s => s.Movie == movie);
-        var isLastSameAuditorium = screenings.Exists(s => s.Auditorium.Id == auditoriumIndex);
-        var lastSameAuditorium = screenings.LastOrDefault(s => s.Auditorium.Id == auditoriumIndex);
-        var lastScreening = screenings.LastOrDefault();
-        DateTime lastStart = lastScreening.Start;
-
-
-        if (isLastSameScreening)
-        {
-            if (lastSameScreening.Start.Hour >= 16)
-            {
-                return new DateTime(lastStart.Year, lastStart.Month, lastStart.Day + 1, 10, 00, 00);
-            }
-            else
-            {
-                return new DateTime(lastStart.Year, lastStart.Month, lastStart.Day, lastStart.Hour + 6, 00, 00);
-            }
-            
-
-        }
-        if (lastStart.Hour >= 22)
-        {
-            return new DateTime(lastStart.Year, lastStart.Month, lastStart.Day + 1, 10, 00, 00);
-        }
-        
-        return new DateTime(lastStart.Year, lastStart.Month, lastStart.Day, lastStart.Hour + 3, 00, 00);
-    }
     
-    //10:00 - 22:00
-    //Min. 3 hours between screenings
-    //Round hours
-    
-    
+
    
 }
