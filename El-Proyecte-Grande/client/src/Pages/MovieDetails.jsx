@@ -4,13 +4,13 @@ import Footer from "../Components/Footer";
 import MovieInfo from "../Components/MovieInfo";
 
 
-const MovieDetails = ({data}) => {
+const MovieDetails = ({data, screenings}) => {
  
   return (
     <>
     <Header/>
     <Slider/>
-    <MovieInfo data={data}/>
+    <MovieInfo data={data} screenings={screenings}/>
     <Footer/>
     </>
   );
