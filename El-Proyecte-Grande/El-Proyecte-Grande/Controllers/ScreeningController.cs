@@ -1,5 +1,6 @@
 using AspCinema.Models;
 using El_Proyecte_Grande.Services;
+using El_Proyecte_Grande.Services.DbSeed;
 using Microsoft.AspNetCore.Mvc;
 
 namespace El_Proyecte_Grande.Controllers;
@@ -12,11 +13,13 @@ public class ScreeningController : ControllerBase
 {
 
     private readonly IScreeningRepository _screeningRepository;
+    private readonly ISeedScreenings _seedScreenings;
 
 
-    public ScreeningController(IScreeningRepository screeningRepository)
+    public ScreeningController(IScreeningRepository screeningRepository, ISeedScreenings seedScreenings)
     {
         _screeningRepository = screeningRepository;
+        _seedScreenings = seedScreenings;
     }
 
     [HttpGet]
@@ -31,7 +34,7 @@ public class ScreeningController : ControllerBase
             }
             else
             {
-                var seeded = await _screeningRepository.SeedScreenings();
+                var seeded = await _seedScreenings.Seed();
                 foreach (var screening in seeded)
                 {
                     _screeningRepository.AddScreening(screening);
