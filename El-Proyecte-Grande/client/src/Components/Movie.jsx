@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Screenings from "./Screenings";
 import { useState} from "react";
 
-const Movie = ({ data }) => {
+const Movie = ({ data, screenings }) => {
   const [selectedMovieId, setSelectedMovieId] = useState("");
 
   if (!data) {
@@ -41,7 +41,7 @@ const Movie = ({ data }) => {
             <p>
               <strong>Runtime: </strong> {selectedMovie.durationInSec}
             </p>
-            <Screenings />
+            <Screenings screenings={screenings} movie={selectedMovie} />
           </div>
         </div>
       ) : (
@@ -62,7 +62,7 @@ const Movie = ({ data }) => {
               <p>
                 <strong>Runtime: </strong> {movie.durationInSec}
               </p>
-              <Screenings />
+              <Screenings screenings={screenings} movie={movie}/>
             </div>
           </div>
         ))
