@@ -1,5 +1,6 @@
 using AspCinema.Models;
 using El_Proyecte_Grande.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -125,6 +126,19 @@ public class MovieController : ControllerBase
         catch (Exception ex)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+    
+    [HttpGet("Test"), Authorize]
+    public ActionResult Test()
+    {
+        try
+        {
+            return Ok("test");
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
     }
 }
