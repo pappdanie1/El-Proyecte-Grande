@@ -1,6 +1,13 @@
 import "./Component_css/Header.css";
+import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ isAuthenticated }) => {
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    localStorage.removeItem('token');
+  }
+
   return (
     <nav className="navbar">
       <div className="left">
@@ -31,8 +38,22 @@ const Header = () => {
             </button>
           </form>
         </div>
-        <button className="btn">Register</button>
-        <button className="btn">Login</button>
+        {
+          isAuthenticated ? (
+            <button onClick={handleClick} className="btn">
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link to="/register" className="btn">
+                Register
+              </Link>
+              <Link to="/login" className="btn">
+                Login
+              </Link>
+            </>
+          )
+        }
       </div>
     </nav>
   );
