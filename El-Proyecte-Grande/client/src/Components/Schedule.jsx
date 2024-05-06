@@ -1,7 +1,6 @@
 import "./Component_css/Schedule.css";
-import MovieDropdown from "./MovieDropdown";
 
-const Schedule = ({data}) => {
+const Schedule = () => {
   
 
   const daysOfWeek = [
