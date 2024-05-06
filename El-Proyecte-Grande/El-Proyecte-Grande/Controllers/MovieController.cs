@@ -129,7 +129,7 @@ public class MovieController : ControllerBase
         }
     }
     
-    [HttpGet("Test"), Authorize]
+    [HttpGet("Test"), Authorize(Roles = "Admin")]
     public ActionResult Test()
     {
         try
