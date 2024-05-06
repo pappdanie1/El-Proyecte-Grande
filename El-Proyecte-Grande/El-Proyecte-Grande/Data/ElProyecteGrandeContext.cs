@@ -13,22 +13,9 @@ public class ElProyecteGrandeContext : DbContext
     public DbSet<Person> Persons { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<Seat> Seats { get; set; }
-    
-    private readonly IConfiguration _configuration;
 
-    public ElProyecteGrandeContext(IConfiguration configuration)
+    public ElProyecteGrandeContext(DbContextOptions<ElProyecteGrandeContext> options) : base(options)
     {
-        _configuration = configuration;
-    }
-    
-    
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        string connectionString = _configuration.GetConnectionString("DefaultConnection");
-        optionsBuilder.UseSqlServer(connectionString, options =>
-        {
-            options.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-        });
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
