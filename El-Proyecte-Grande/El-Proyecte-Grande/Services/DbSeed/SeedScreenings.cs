@@ -39,7 +39,6 @@ public class SeedScreenings : ISeedScreenings
 
                 while (currentTime < endTime)
                 {
-                    // Create a new screening
                     screenings.Add(new Screening
                     {
                         Movie = movie,
