@@ -11,7 +11,7 @@ public class AuthController : ControllerBase
 {
     private readonly IAuthService _authenticationService;
 
-    public AuthController(IAuthService authenticationService, IConfiguration configuration)
+    public AuthController(IAuthService authenticationService)
     {
         _authenticationService = authenticationService;
     }
