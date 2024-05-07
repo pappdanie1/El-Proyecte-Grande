@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using El_Proyecte_Grande.Data;
 using El_Proyecte_Grande.Services;
 using El_Proyecte_Grande.Services.Authentication;
@@ -48,7 +49,9 @@ app.Run();
 
 void AddServices()
 {
-    builder.Services.AddControllers();
+    //builder.Services.AddControllers();
+    builder.Services.AddControllers().AddJsonOptions(x =>
+        x.JsonSerializerOptions.ReferenceHandler =  ReferenceHandler.IgnoreCycles);
     builder.Services.AddScoped<IMovieRepository, MovieRepository>();
     builder.Services.AddScoped<ISeatRepository, SeatRepository>();
     builder.Services.AddSingleton<IMovieDbApi, MovieDbApi>();
