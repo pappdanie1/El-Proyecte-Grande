@@ -18,7 +18,7 @@ public class ReservationRepository : IReservationRepository
     //All reservations for a given user
     public IList<Reservation> GetAllByUser(string userName)
     {
-        return _usersContext.Reservations.Where(r => r.Customer.UserName == userName).ToList();
+        return _elProyecteGrandeContext.Reservations.Where(r => r.Customer.UserName == userName).ToList();
     }
 
     //All reservations for a given screening
@@ -30,7 +30,7 @@ public class ReservationRepository : IReservationRepository
     //for deleting a reservation for a user
     public Reservation? GetById(int id, string userName)
     {
-        return _usersContext.Reservations.Include(r => r.Customer)
+        return _elProyecteGrandeContext.Reservations.Include(r => r.Customer)
             .FirstOrDefault(r => r.Id == id && r.Customer.UserName == userName);
     }
 
