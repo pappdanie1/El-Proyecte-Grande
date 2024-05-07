@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace El_Proyecte_Grande.Controllers;
 
 [ApiController]
-[Route("[controller]"), Authorize(Roles = "User")]
+[Route("[controller]"), Authorize(Roles = "User, Admin")]
 public class ReservationController : ControllerBase
 {
     private readonly IReservationRepository _reservationRepository;
@@ -66,11 +66,20 @@ public class ReservationController : ControllerBase
     {
         try
         {
-            var userId = User.FindAll(ClaimTypes.NameIdentifier).Skip(1).FirstOrDefault().Value;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             Console.WriteLine(userId);
             var user = await _userManager.FindByIdAsync(userId);
-            reservation.CustomerId = userId;
             reservation.Customer = user;
+            reservation.Customer.Reservations.Add(reservation);
+            reservation.Screening.Reservations.Add(reservation);
+            foreach (var seat in reservation.Seats)
+            {
+                seat.Reservation = reservation;
+            }
             
             _reservationRepository.AddReservation(reservation);
             return Ok(reservation);
