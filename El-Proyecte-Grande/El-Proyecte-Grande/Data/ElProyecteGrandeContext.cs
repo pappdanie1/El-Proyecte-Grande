@@ -12,6 +12,8 @@ public class ElProyecteGrandeContext : DbContext
     public DbSet<Auditorium> Auditoriums { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<Seat> Seats { get; set; }
+    
+    public DbSet<SeatReserved> SeatReserveds { get; set; }
 
     public ElProyecteGrandeContext(DbContextOptions<ElProyecteGrandeContext> options) : base(options)
     {
@@ -32,10 +34,40 @@ public class ElProyecteGrandeContext : DbContext
         modelBuilder.Entity<Movie>().HasIndex(u => u.Title).IsUnique();
     
         modelBuilder.Entity<Auditorium>().HasData(auditoria);
+        /*modelBuilder.Entity<Reservation>()
+            .HasOne(r => r.Customer)
+            .WithMany(s => s.Reservations)
+            .HasForeignKey(r => r.CustomerId)
+            .HasForeignKey(r => r.ScreeningId);*/
+        
         modelBuilder.Entity<Reservation>()
             .HasOne(r => r.Customer)
             .WithMany(s => s.Reservations)
             .HasForeignKey(r => r.CustomerId)
-            .HasForeignKey(r => r.ScreeningId);
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Reservation>()
+            .HasOne(r => r.Screening)
+            .WithMany()
+            .HasForeignKey(r => r.ScreeningId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<SeatReserved>()
+            .HasOne(sr => sr.Reservation)
+            .WithMany(r => r.Seats)
+            .HasForeignKey(sr => sr.ReservationId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<SeatReserved>()
+            .HasOne(sr => sr.Screening)
+            .WithMany() // Assuming no navigation property from Screening to SeatReserved
+            .HasForeignKey(sr => sr.ScreeningId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<SeatReserved>()
+            .HasOne(sr => sr.Seat)
+            .WithMany()
+            .HasForeignKey(sr => sr.SeatId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
