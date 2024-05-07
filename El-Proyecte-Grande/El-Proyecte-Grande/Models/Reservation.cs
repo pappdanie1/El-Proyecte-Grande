@@ -1,13 +1,13 @@
+using El_Proyecte_Grande.Data;
+
 namespace AspCinema.Models;
 
 public class Reservation
 {
     public int Id { get; set; }
+    public int ScreeningId { get; set; }
+    public int CustomerId { get; set; }
+    public ICollection<SeatReserved> Seats { get; set; } = new List<SeatReserved>();
     public Screening Screening { get; set; }
-    public Person Customer { get; set; }
-    public bool Reserved { get; set; }
-    private string Customer_Name { get; set; }
-    public string Customer_Mail { get; set; }
-    public string Customer_Phone { get; set; }
-    
+    public ApplicationUser Customer { get; set; }
 }
