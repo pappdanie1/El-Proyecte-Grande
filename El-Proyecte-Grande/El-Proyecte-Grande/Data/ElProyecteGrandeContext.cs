@@ -10,7 +10,6 @@ public class ElProyecteGrandeContext : DbContext
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Screening> Screenings { get; set; }
     public DbSet<Auditorium> Auditoriums { get; set; }
-    public DbSet<Person> Persons { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<Seat> Seats { get; set; }
 
@@ -33,6 +32,10 @@ public class ElProyecteGrandeContext : DbContext
         modelBuilder.Entity<Movie>().HasIndex(u => u.Title).IsUnique();
     
         modelBuilder.Entity<Auditorium>().HasData(auditoria);
-        
+        modelBuilder.Entity<Reservation>()
+            .HasOne(r => r.Customer)
+            .WithMany(s => s.Reservations)
+            .HasForeignKey(r => r.CustomerId)
+            .HasForeignKey(r => r.ScreeningId);
     }
 }
