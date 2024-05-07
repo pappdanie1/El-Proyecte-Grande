@@ -7,9 +7,9 @@ namespace El_Proyecte_Grande.Services.DbSeed;
 public class SeedScreenings : ISeedScreenings
 {
 
-    private readonly ElProyecteGrandeContext _movieDbContext;
+    private readonly AspCinemaContext _movieDbContext;
 
-    public SeedScreenings(ElProyecteGrandeContext context)
+    public SeedScreenings(AspCinemaContext context)
     {
         _movieDbContext = context;
     }

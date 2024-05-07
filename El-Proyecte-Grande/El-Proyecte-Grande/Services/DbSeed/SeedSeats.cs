@@ -6,9 +6,9 @@ namespace El_Proyecte_Grande.Services.DbSeed;
 
 public class SeedSeats : ISeedSeats
 {
-    private readonly ElProyecteGrandeContext _context;
+    private readonly AspCinemaContext _context;
 
-    public SeedSeats(ElProyecteGrandeContext context)
+    public SeedSeats(AspCinemaContext context)
     {
         _context = context;
     }

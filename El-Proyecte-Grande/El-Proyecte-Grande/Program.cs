@@ -23,11 +23,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var dbContext2 = services.GetService<AspCinemaContext>();
+    dbContext2!.Database.EnsureDeleted();
+    dbContext2.Database.EnsureCreated();
+    
+    var authenticationSeeder = scope.ServiceProvider.GetRequiredService<AuthenticationSeeder>();
+    authenticationSeeder.AddRoles();
+    authenticationSeeder.AddAdmin();
+}
 
-using var scope = app.Services.CreateScope();
-var authenticationSeeder = scope.ServiceProvider.GetRequiredService<AuthenticationSeeder>();
-authenticationSeeder.AddRoles();
-authenticationSeeder.AddAdmin();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -49,7 +58,7 @@ app.Run();
 
 void AddServices()
 {
-    //builder.Services.AddControllers();
+    builder.Services.AddControllers();
     builder.Services.AddControllers().AddJsonOptions(x =>
         x.JsonSerializerOptions.ReferenceHandler =  ReferenceHandler.IgnoreCycles);
     builder.Services.AddScoped<IMovieRepository, MovieRepository>();
@@ -63,6 +72,7 @@ void AddServices()
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
     builder.Services.AddScoped<AuthenticationSeeder>();
+    builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 }
 
 void ConfigureSwagger()
@@ -99,12 +109,7 @@ void ConfigureSwagger()
 void AddDbContext()
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    builder.Services.AddDbContext<ElProyecteGrandeContext>(options => 
-        options.UseSqlServer(connectionString, sqlOption =>
-        {
-            sqlOption.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-        }));
-    builder.Services.AddDbContext<UsersContext>(options =>
+    builder.Services.AddDbContext<AspCinemaContext>(options =>
         options.UseSqlServer(connectionString, sqlOption =>
         {
             sqlOption.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
@@ -147,5 +152,5 @@ void AddIdentity()
             options.Password.RequireLowercase = false;
         })
         .AddRoles<IdentityRole>()
-        .AddEntityFrameworkStores<UsersContext>();
+        .AddEntityFrameworkStores<AspCinemaContext>();
 }

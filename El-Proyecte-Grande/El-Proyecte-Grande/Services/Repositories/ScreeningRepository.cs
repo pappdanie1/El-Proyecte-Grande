@@ -7,9 +7,9 @@ namespace El_Proyecte_Grande.Services;
 
 public class ScreeningRepository : IScreeningRepository
 {
-    private readonly ElProyecteGrandeContext _movieDbContext;
+    private readonly AspCinemaContext _movieDbContext;
 
-    public ScreeningRepository(ElProyecteGrandeContext context)
+    public ScreeningRepository(AspCinemaContext context)
     {
         _movieDbContext = context;
     }

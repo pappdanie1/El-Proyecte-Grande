@@ -6,9 +6,9 @@ namespace El_Proyecte_Grande.Services;
 
 public class SeatRepository : ISeatRepository
 {
-    private readonly ElProyecteGrandeContext _context;
+    private readonly AspCinemaContext _context;
 
-    public SeatRepository(ElProyecteGrandeContext context)
+    public SeatRepository(AspCinemaContext context)
     {
         _context = context;
     }

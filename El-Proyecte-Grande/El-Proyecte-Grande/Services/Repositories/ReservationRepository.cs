@@ -6,13 +6,13 @@ namespace El_Proyecte_Grande.Services;
 
 public class ReservationRepository : IReservationRepository
 {
-    private readonly UsersContext _usersContext;
-    private readonly ElProyecteGrandeContext _elProyecteGrandeContext;
+    private readonly AspCinemaContext _aspCinemaContext;
+    private readonly AspCinemaContext _elProyecteGrandeContext;
 
-    public ReservationRepository(ElProyecteGrandeContext elProyecteGrandeContext, UsersContext usersContext)
+    public ReservationRepository(AspCinemaContext elProyecteGrandeContext, AspCinemaContext aspCinemaContext)
     {
         _elProyecteGrandeContext = elProyecteGrandeContext;
-        _usersContext = usersContext;
+        _aspCinemaContext = aspCinemaContext;
     }
     
     //All reservations for a given user
@@ -24,7 +24,7 @@ public class ReservationRepository : IReservationRepository
     //All reservations for a given screening
     public IList<Reservation> GetAllByScreening(int screeningId)
     {
-        return _elProyecteGrandeContext.Reservations.Where(r => r.ScreeningId == screeningId).ToList();
+        return _elProyecteGrandeContext.Reservations.Where(r => r.Screening.Id == screeningId).ToList();
     }
 
     //for deleting a reservation for a user

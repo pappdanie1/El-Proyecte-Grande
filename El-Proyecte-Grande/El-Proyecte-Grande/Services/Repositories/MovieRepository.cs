@@ -5,9 +5,9 @@ namespace El_Proyecte_Grande.Services;
 
 public class MovieRepository : IMovieRepository
 {
-    private readonly ElProyecteGrandeContext _movieDbContext;
+    private readonly AspCinemaContext _movieDbContext;
 
-    public MovieRepository(ElProyecteGrandeContext context)
+    public MovieRepository(AspCinemaContext context)
     {
         _movieDbContext = context;
     }
