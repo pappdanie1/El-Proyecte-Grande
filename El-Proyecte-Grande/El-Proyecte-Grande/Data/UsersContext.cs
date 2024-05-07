@@ -11,7 +11,6 @@ public class UsersContext : IdentityDbContext<ApplicationUser, IdentityRole, str
     {
     }
     
-    public DbSet<Reservation> Reservations { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
