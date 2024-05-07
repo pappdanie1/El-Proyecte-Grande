@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var result = await _authenticationService.RegisterAsync(request.Email, request.Username, request.Password, "User");
+        var result = await _authenticationService.RegisterAsync(request.Email, request.Name, request.PhoneNumber, request.Username, request.Password, "User");
 
         if (!result.Success)
         {
@@ -32,7 +32,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        return CreatedAtAction(nameof(Register), new RegistrationResponse(result.Email, result.UserName));
+        return CreatedAtAction(nameof(Register), new RegistrationResponse(result.Email, result.UserName, result.Name, result.PhoneNumber));
     }
 
     [HttpPost("Login")]

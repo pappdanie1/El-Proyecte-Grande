@@ -1,3 +1,4 @@
+using El_Proyecte_Grande.Data;
 using Microsoft.AspNetCore.Identity;
 using IConfiguration = Castle.Core.Configuration.IConfiguration;
 
@@ -6,10 +7,10 @@ namespace El_Proyecte_Grande.Services.Authentication;
 public class AuthenticationSeeder
 {
     private RoleManager<IdentityRole> _roleManager;
-    private UserManager<IdentityUser> _userManager;
+    private UserManager<ApplicationUser> _userManager;
     private IConfigurationRoot _config;
 
-    public AuthenticationSeeder(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+    public AuthenticationSeeder(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
     {
         _roleManager = roleManager;
         _userManager = userManager;
@@ -36,7 +37,7 @@ public class AuthenticationSeeder
         var adminInDb = await _userManager.FindByEmailAsync("admin@admin.com");
         if (adminInDb == null)
         {
-            var admin = new IdentityUser { UserName = "admin", Email = "admin@admin.com" };
+            var admin = new ApplicationUser { UserName = "admin", Name = "admin", PhoneNumber = "123", Email = "admin@admin.com" };
             var adminCreated = await _userManager.CreateAsync(admin, "admin123");
 
             if (adminCreated.Succeeded)
