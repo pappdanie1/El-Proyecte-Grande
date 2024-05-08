@@ -1,0 +1,16 @@
+.seat {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    background-color: #ccc;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .seat.selected {
+    background-color: rgba(255, 0, 0, 0.555);
+  }
+  
+  .row {
+    margin-bottom: 10px;
+  }
