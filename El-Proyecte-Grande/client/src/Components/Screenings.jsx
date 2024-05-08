@@ -1,4 +1,5 @@
 import "./Component_css/Screenings.css";
+import {Link} from "react-router-dom";
 
 function Screenings({ screenings, movie }) {
 
@@ -10,7 +11,7 @@ function Screenings({ screenings, movie }) {
       {screenings
       .filter((s) => s.movie.id === movie.id)
       .map((screening, index) => (
-        <button className="screening-time" key={index}>{screening.start.split("T")[1].slice(0,5)}</button>
+        <Link to={`/auditorium/${screening.id}`} className="screening-time" key={index}>{screening.start.split("T")[1].slice(0,5)}</Link>
       ))}
     </div>
   );
