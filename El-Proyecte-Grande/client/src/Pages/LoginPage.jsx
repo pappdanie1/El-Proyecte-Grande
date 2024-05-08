@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Navigate} from "react-router-dom";
 import LoginForm from "../Components/LoginForm";
 
-function LoginPage() {
+function LoginPage({setIsAuthenticated}) {
     const [formData, setFormData] = useState({
         email: '',
         password:''
@@ -39,6 +39,7 @@ function LoginPage() {
 
       const data = await response.json();
       localStorage.setItem("token", data.token);
+      setIsAuthenticated(true);
 
       setLoginSuccessful(true);
 
