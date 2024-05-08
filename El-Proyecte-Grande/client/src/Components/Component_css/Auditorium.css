@@ -1,0 +1,31 @@
+.auditorium {
+    margin-top: 20px;
+  }
+  
+  .seats {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .seat-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .row-number {
+    margin-right: 10px;
+  }
+  
+  .seat {
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+    border: 1px solid #888;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .seat.selected {
+    background-color: #00bcd4;
+  }
