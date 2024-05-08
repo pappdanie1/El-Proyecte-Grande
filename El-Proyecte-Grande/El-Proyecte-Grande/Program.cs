@@ -4,6 +4,7 @@ using El_Proyecte_Grande.Data;
 using El_Proyecte_Grande.Services;
 using El_Proyecte_Grande.Services.Authentication;
 using El_Proyecte_Grande.Services.DbSeed;
+using El_Proyecte_Grande.Services.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,7 @@ using (var scope = app.Services.CreateScope())
     var authenticationSeeder = scope.ServiceProvider.GetRequiredService<AuthenticationSeeder>();
     authenticationSeeder.AddRoles();
     authenticationSeeder.AddAdmin();
+    
     dbContext.Seed();
 }
 
@@ -77,6 +79,7 @@ void AddServices()
     builder.Services.AddScoped<ITokenService, TokenService>();
     builder.Services.AddScoped<AuthenticationSeeder>();
     builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+    builder.Services.AddScoped<IAuditoriumRepository, AuditoriumRepository>();
 }
 
 void ConfigureSwagger()
