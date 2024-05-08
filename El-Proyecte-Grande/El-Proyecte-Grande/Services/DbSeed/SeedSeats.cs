@@ -27,12 +27,14 @@ public class SeedSeats : ISeedSeats
                 {
                     for (int k = 1; k <= seatsInRow; k++)
                     {
-                        seats.Add(new Seat
+                        var seat = new Seat
                         {
                             Auditorium = auditorium,
                             Number = k,
                             Row = j
-                        }); 
+                        };
+                        seats.Add(seat);
+                        auditorium.Seats.Add(seat);
                     }
                 } 
             }

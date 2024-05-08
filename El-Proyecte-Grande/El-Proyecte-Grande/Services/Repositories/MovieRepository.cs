@@ -1,5 +1,6 @@
 using AspCinema.Models;
 using El_Proyecte_Grande.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace El_Proyecte_Grande.Services;
 
@@ -14,7 +15,7 @@ public class MovieRepository : IMovieRepository
 
     public IList<Movie> GetAll()
     {
-        return _movieDbContext.Movies.ToList();
+        return _movieDbContext.Movies.Include(m => m.Screenings).ToList();
     }
 
     public Movie? GetById(int id)
