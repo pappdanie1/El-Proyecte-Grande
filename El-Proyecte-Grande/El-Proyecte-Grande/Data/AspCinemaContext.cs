@@ -26,11 +26,11 @@ public class AspCinemaContext : IdentityDbContext<ApplicationUser, IdentityRole,
         
         List<Auditorium> auditoria = new List<Auditorium>()
         {
-            new Auditorium { Id = 1, Name = "Audit1", SeatNo = 30 },
-            new Auditorium { Id = 2, Name = "Audit2", SeatNo = 30 },
-            new Auditorium { Id = 3, Name = "Audit3", SeatNo = 30 },
-            new Auditorium { Id = 4, Name = "Audit4", SeatNo = 30 },
-            new Auditorium { Id = 5, Name = "Audit5", SeatNo = 30 }
+            new Auditorium { Id = 1, Name = "Audit1", Seats = new List<Seat>() },
+            new Auditorium { Id = 2, Name = "Audit2", Seats = new List<Seat>() },
+            new Auditorium { Id = 3, Name = "Audit3", Seats = new List<Seat>() },
+            new Auditorium { Id = 4, Name = "Audit4", Seats = new List<Seat>() },
+            new Auditorium { Id = 5, Name = "Audit5", Seats = new List<Seat>() }
         };
 
 
@@ -38,21 +38,68 @@ public class AspCinemaContext : IdentityDbContext<ApplicationUser, IdentityRole,
     
         modelBuilder.Entity<Auditorium>().HasData(auditoria);
         
+        modelBuilder.Entity<Reservation>()
+            .HasOne(r => r.Customer)
+            .WithMany(c => c.Reservations)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<Reservation>()
+            .HasOne(r => r.Screening)
+            .WithMany(s => s.Reservations)
+            .OnDelete(DeleteBehavior.NoAction);
+        
         modelBuilder.Entity<SeatReserved>()
-            .HasOne(sr => sr.Screening)
+            .HasOne(s => s.Reservation)
+            .WithMany(r => r.ReservedSeats)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<SeatReserved>()
+            .HasOne(s => s.Screening)
             .WithMany(s => s.ReservedSeats)
             .OnDelete(DeleteBehavior.NoAction);
         
         modelBuilder.Entity<SeatReserved>()
-            .HasOne(sr => sr.Seat)
-            .WithMany(s => s.Reserveds)
+            .HasOne(s => s.Seat)
+            .WithMany(s => s.ReservedSeats)
             .OnDelete(DeleteBehavior.NoAction);
         
-        modelBuilder.Entity<SeatReserved>()
-            .HasOne(sr => sr.Reservation)
-            .WithMany(s => s.Seats)
+        modelBuilder.Entity<Seat>()
+            .HasOne(s => s.Auditorium)
+            .WithMany(a => a.Seats)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<Screening>()
+            .HasOne(s => s.Auditorium)
+            .WithMany(a => a.Screenings)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<Screening>()
+            .HasOne(s => s.Movie)
+            .WithMany(m => m.Screenings)
             .OnDelete(DeleteBehavior.NoAction);
     }
     
-    //initialdb created
+    public void Seed()
+    {
+        foreach (var auditorium in Auditoriums)
+        {
+            var rows = 5;
+            var seatsInRow = 6;
+            for (int j = 1; j <= rows; j++)
+            {
+                for (int k = 1; k <= seatsInRow; k++)
+                {
+                    var seat = new Seat
+                    {
+                        Auditorium = auditorium,
+                        Number = k,
+                        Row = j
+                    };
+                    Seats.Add(seat); 
+                    auditorium.Seats.Add(seat);
+                }
+            }
+        }
+        SaveChanges(); 
+    }
 }
