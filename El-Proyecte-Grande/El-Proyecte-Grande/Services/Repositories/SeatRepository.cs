@@ -2,7 +2,7 @@ using AspCinema.Models;
 using El_Proyecte_Grande.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace El_Proyecte_Grande.Services;
+namespace El_Proyecte_Grande.Services.Repositories;
 
 public class SeatRepository : ISeatRepository
 {
