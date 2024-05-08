@@ -6,6 +6,8 @@ const Header = ({ isAuthenticated, setIsAuthenticated }) => {
   const handleClick = (e) => {
     e.preventDefault();
     localStorage.removeItem('token');
+    localStorage.removeItem('name');
+    localStorage.removeItem('phone')
     setIsAuthenticated(false);
   }
 
