@@ -1,11 +1,12 @@
 import "./Component_css/Header.css";
 import { Link } from "react-router-dom";
 
-const Header = ({ isAuthenticated }) => {
+const Header = ({ isAuthenticated, setIsAuthenticated }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
     localStorage.removeItem('token');
+    setIsAuthenticated(false);
   }
 
   return (
