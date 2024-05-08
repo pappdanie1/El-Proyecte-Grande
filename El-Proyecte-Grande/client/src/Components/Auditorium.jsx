@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Seat from "./Seat.jsx";
 import "./Component_css/Auditorium.css"
+import Loading from "./Loading.jsx";
 
 function Auditorium() {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [seats, setSeats] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const { id } = useParams();
 
@@ -14,6 +16,7 @@ function Auditorium() {
       const response = await fetch(`/api/Screening/${id}`);
       const jsonData = await response.json();
       setSeats(jsonData.auditorium.seats);
+      setLoading(false);
     };
 
     FetchAuditoriums();
@@ -45,9 +48,13 @@ function Auditorium() {
     });
   };
 
+  if (loading) {
+    return <Loading/>
+  }
+
   return (
     <div className="auditorium">
-      <h2>Cinema Auditorium</h2>
+      <h2>SCREEN</h2>
       <div className="seats">
         {Object.keys(seatsByRow).map((row) => (
           <div key={row} className="seat-row">
