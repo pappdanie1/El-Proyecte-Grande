@@ -1,5 +1,5 @@
-using AspCinema.Models;
 using El_Proyecte_Grande.Data;
+using El_Proyecte_Grande.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace El_Proyecte_Grande.Services.DbSeed;

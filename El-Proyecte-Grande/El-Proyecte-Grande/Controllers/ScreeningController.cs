@@ -1,6 +1,8 @@
 using AspCinema.Models;
+using El_Proyecte_Grande.Models;
 using El_Proyecte_Grande.Services;
 using El_Proyecte_Grande.Services.DbSeed;
+using El_Proyecte_Grande.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace El_Proyecte_Grande.Controllers;
