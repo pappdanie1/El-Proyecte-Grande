@@ -1,5 +1,6 @@
 using AspCinema.Models;
 using El_Proyecte_Grande.Services;
+using El_Proyecte_Grande.Services.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
