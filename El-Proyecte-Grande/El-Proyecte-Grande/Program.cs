@@ -25,14 +25,18 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
+    
     var services = scope.ServiceProvider;
-    var dbContext2 = services.GetService<AspCinemaContext>();
-    dbContext2!.Database.EnsureDeleted();
-    dbContext2.Database.EnsureCreated();
+    var dbContext = services.GetService<AspCinemaContext>();
+    /*
+    dbContext!.Database.EnsureDeleted();
+    dbContext.Database.EnsureCreated();
+    */
     
     var authenticationSeeder = scope.ServiceProvider.GetRequiredService<AuthenticationSeeder>();
     authenticationSeeder.AddRoles();
     authenticationSeeder.AddAdmin();
+    dbContext.Seed();
 }
 
 
