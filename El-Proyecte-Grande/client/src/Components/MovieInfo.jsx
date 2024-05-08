@@ -12,7 +12,7 @@ function MovieInfo({data, screenings}) {
   useEffect(() => {
     const fetchMovie = async () => {
       try {
-        const response = await fetch(`http://localhost:5229/Movie/${movieId}`);
+        const response = await fetch(`/api/Movie/${movieId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch movie");
         }
