@@ -9,6 +9,7 @@ import RegistrationPage from "./Pages/RegistrationPage";
 import LoginPage from "./Pages/LoginPage";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+import Auditorium from "./Components/Auditorium";
 
 function App() {
   const [data, setData] = useState([]);
@@ -16,6 +17,9 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("token") !== null
   );
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [screening, setScreening] = useState();
+  const [seats, setSeats] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,8 +68,9 @@ function App() {
             )
           }
         />
-        <Route path="/auditorium/:id" element={<Reservation/>}/>
+        <Route path="/auditorium/:id" element={<Auditorium setScreening={setScreening} screening={screening} setSeats={setSeats} seats={seats} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats}/>}/>
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/reservation" element={<Reservation screening={screening} selectedSeats={selectedSeats}/>}/>
       </Routes>
       <Footer />
     </BrowserRouter>
