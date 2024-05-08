@@ -1,4 +1,6 @@
-namespace AspCinema.Models;
+using AspCinema.Models;
+
+namespace El_Proyecte_Grande.Models;
 
 public class SeatReserved
 {

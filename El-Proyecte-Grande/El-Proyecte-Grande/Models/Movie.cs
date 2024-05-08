@@ -1,3 +1,5 @@
+using El_Proyecte_Grande.Models;
+
 namespace AspCinema.Models;
 
 public class Movie

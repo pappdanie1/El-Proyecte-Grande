@@ -1,4 +1,5 @@
 using AspCinema.Models;
+using El_Proyecte_Grande.Models;
 
 namespace El_Proyecte_Grande.Services.DbSeed;
 

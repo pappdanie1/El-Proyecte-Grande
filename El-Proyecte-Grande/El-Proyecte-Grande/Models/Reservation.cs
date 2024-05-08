@@ -1,4 +1,5 @@
 using El_Proyecte_Grande.Data;
+using El_Proyecte_Grande.Models;
 
 namespace AspCinema.Models;
 

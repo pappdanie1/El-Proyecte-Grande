@@ -1,7 +1,6 @@
-using AspCinema.Models;
-using El_Proyecte_Grande.Data;
+using El_Proyecte_Grande.Models;
 
-namespace El_Proyecte_Grande.Services;
+namespace El_Proyecte_Grande.Services.Repositories;
 
 public interface IScreeningRepository
 {

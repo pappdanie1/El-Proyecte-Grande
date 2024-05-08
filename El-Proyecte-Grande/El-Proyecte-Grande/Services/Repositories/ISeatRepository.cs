@@ -1,6 +1,6 @@
 using AspCinema.Models;
 
-namespace El_Proyecte_Grande.Services;
+namespace El_Proyecte_Grande.Services.Repositories;
 
 public interface ISeatRepository
 {
