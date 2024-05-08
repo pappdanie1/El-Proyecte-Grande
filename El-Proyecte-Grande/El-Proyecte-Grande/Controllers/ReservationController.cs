@@ -2,6 +2,7 @@ using System.Security.Claims;
 using AspCinema.Models;
 using El_Proyecte_Grande.Data;
 using El_Proyecte_Grande.Services;
+using El_Proyecte_Grande.Services.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
