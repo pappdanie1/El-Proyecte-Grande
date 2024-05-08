@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Seat from "./Seat.jsx";
 import "./Component_css/Auditorium.css"
 import Loading from "./Loading.jsx";
 
-function Auditorium() {
-  const [selectedSeats, setSelectedSeats] = useState([]);
-  const [seats, setSeats] = useState([]);
+function Auditorium({ setScreening, screening, seats, setSeats, selectedSeats, setSelectedSeats }) {
   const [loading, setLoading] = useState(true);
 
   const { id } = useParams();
@@ -16,6 +14,7 @@ function Auditorium() {
       const response = await fetch(`/api/Screening/${id}`);
       const jsonData = await response.json();
       setSeats(jsonData.auditorium.seats);
+      setScreening(jsonData)
       setLoading(false);
     };
 
@@ -48,6 +47,8 @@ function Auditorium() {
     });
   };
 
+  console.log(selectedSeats);
+
   if (loading) {
     return <Loading/>
   }
@@ -55,6 +56,8 @@ function Auditorium() {
   return (
     <div className="auditorium">
       <h2>SCREEN</h2>
+      <h3>{screening.movie.title}</h3>
+      <p>Screening time: {screening.start.split("T").join(" ")}</p>
       <div className="seats">
         {Object.keys(seatsByRow).map((row) => (
           <div key={row} className="seat-row">
@@ -62,7 +65,7 @@ function Auditorium() {
             {seatsByRow[row].map((seat) => (
               <Seat
                 key={seat.id}
-                number={seat.number}
+                seat={seat}
                 isSelected={selectedSeats.includes(seat.id)}
                 onSelect={handleSeatSelect}
               />
@@ -70,6 +73,7 @@ function Auditorium() {
           </div>
         ))}
       </div>
+        <Link to="/reservation">Reserve</Link>
     </div>
   );
 }
