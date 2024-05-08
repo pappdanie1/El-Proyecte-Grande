@@ -70,16 +70,10 @@ public class ReservationController : ControllerBase
             {
                 return BadRequest(ModelState);
             }
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindAll(ClaimTypes.NameIdentifier).Skip(1).FirstOrDefault().Value;
             Console.WriteLine(userId);
             var user = await _userManager.FindByIdAsync(userId);
             reservation.Customer = user;
-            reservation.Customer.Reservations.Add(reservation);
-            reservation.Screening.Reservations.Add(reservation);
-            foreach (var seat in reservation.Seats)
-            {
-                seat.Reservation = reservation;
-            }
             
             _reservationRepository.AddReservation(reservation);
             return Ok(reservation);
@@ -106,4 +100,5 @@ public class ReservationController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
     }
+    
 }
