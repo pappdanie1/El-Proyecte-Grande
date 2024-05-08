@@ -1,4 +1,5 @@
 using AspCinema.Models;
+using El_Proyecte_Grande.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -81,25 +82,28 @@ public class AspCinemaContext : IdentityDbContext<ApplicationUser, IdentityRole,
     
     public void Seed()
     {
-        foreach (var auditorium in Auditoriums)
+        if (!Seats.Any())
         {
-            var rows = 5;
-            var seatsInRow = 6;
-            for (int j = 1; j <= rows; j++)
+            foreach (var auditorium in Auditoriums)
             {
-                for (int k = 1; k <= seatsInRow; k++)
+                var rows = 5;
+                var seatsInRow = 6;
+                for (int j = 1; j <= rows; j++)
                 {
-                    var seat = new Seat
+                    for (int k = 1; k <= seatsInRow; k++)
                     {
-                        Auditorium = auditorium,
-                        Number = k,
-                        Row = j
-                    };
-                    Seats.Add(seat); 
-                    auditorium.Seats.Add(seat);
+                        var seat = new Seat
+                        {
+                            Auditorium = auditorium,
+                            Number = k,
+                            Row = j
+                        };
+                        Seats.Add(seat); 
+                        auditorium.Seats.Add(seat);
+                    }
                 }
             }
+            SaveChanges(); 
         }
-        SaveChanges(); 
     }
 }
