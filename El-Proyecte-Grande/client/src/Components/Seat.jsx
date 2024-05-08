@@ -1,8 +1,8 @@
 import "./Component_css/Seat.css";
 
-function Seat({ number, isSelected, onSelect }) {
+function Seat({ seat, isSelected, onSelect }) {
   const handleClick = () => {
-    onSelect();
+    onSelect(seat.id);
   };
 
   return (
@@ -10,7 +10,7 @@ function Seat({ number, isSelected, onSelect }) {
       className={`seat ${isSelected ? "selected" : ""}`}
       onClick={handleClick}
     >
-      {number}
+      {seat.number}
     </div>
   );
 }
