@@ -5,6 +5,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
+  top: 0;
+  position: sticky;
+  z-index: 999;
 }
 
 .cinema-name {
@@ -80,7 +83,6 @@
   cursor: pointer;
 }
 
-/* Adjust button hover state as needed */
 .search-container button:hover {
   background-color: rgba(151, 137, 137, 0.1);
 }

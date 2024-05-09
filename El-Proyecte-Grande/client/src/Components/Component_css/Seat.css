@@ -7,10 +7,16 @@
     cursor: pointer;
   }
   
-  .seat.selected {
-    background-color: rgba(255, 0, 0, 0.555);
-  }
   
+  .seat.reserved {
+    background-color: rgb(255, 0, 0);
+    
+  }
+
+  .seat.reserved:hover {
+    cursor: default;
+  }
+
   .row {
     margin-bottom: 10px;
   }
