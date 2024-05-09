@@ -10,6 +10,8 @@ import LoginPage from "./Pages/LoginPage";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Auditorium from "./Components/Auditorium";
+import ProtectedRoute from "./Components/ProtectedRoute";
+import Redirect from "./Pages/Redirect/Redirect";
 
 function App() {
   const [data, setData] = useState([]);
@@ -24,7 +26,6 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("/api/Movie");
-      console.log(response);
       const jsonData = await response.json();
       setData(jsonData);
 
@@ -35,7 +36,6 @@ function App() {
 
     fetchData();
   }, []);
-  console.log(data);
 
   const redirectToHomeIfLoggedIn = () => {
     return isAuthenticated ? <Navigate to="/" /> : null;
@@ -68,9 +68,10 @@ function App() {
             )
           }
         />
-        <Route path="/auditorium/:id" element={<Auditorium setScreening={setScreening} screening={screening} setSeats={setSeats} seats={seats} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats}/>}/>
+        <Route path="/auditorium/:id" element={<ProtectedRoute><Auditorium setScreening={setScreening} screening={screening} setSeats={setSeats} seats={seats} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats}/></ProtectedRoute>}/>
         <Route path="*" element={<PageNotFound />} />
         <Route path="/reservation" element={<Reservation screening={screening} selectedSeats={selectedSeats}/>}/>
+        <Route path="/redirect" element={<Redirect />} /> 
       </Routes>
       <Footer />
     </BrowserRouter>
