@@ -1,12 +1,13 @@
 import Auditorium from "../Components/Auditorium"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import './Pages_css/Reservation.css'
 
 const  Reservation = ({ screening, selectedSeats }) => {
     const [seats, setSeats] = useState([]);
     const [seatIds, setSeatIds] = useState([]);
     const [errorMessage, setErrorMessage] = useState();
-    const [successful, setSuccessful] = useState(false);
+    const navigate = useNavigate();
     
     const findSeat = (selectedSeats) => {
         const seatArray = []
@@ -84,12 +85,12 @@ const  Reservation = ({ screening, selectedSeats }) => {
                 body: JSON.stringify(requestBody)
             })
 
-            setSuccessful(true)
-
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error({});
             }
+
+            navigate('/redirect')
 
         } catch (error) {
             setErrorMessage(error.message);
@@ -99,7 +100,8 @@ const  Reservation = ({ screening, selectedSeats }) => {
 
 
     return (
-        <div>
+        <div className="full-height" >
+            <h2>Reservation Details</h2>
              <table>
                 <tbody>
                     <tr>
@@ -134,8 +136,9 @@ const  Reservation = ({ screening, selectedSeats }) => {
                     </tr>
                 </tbody>
             </table>
-            <button onClick={handleReserve}>Reserve</button>
-            {successful && <p>Successful Reservation</p>}
+            <div>
+            <button className="screening-time" onClick={handleReserve}>Reserve</button>
+            </div>
             {errorMessage && <p>{errorMessage}</p>}
         </div>
     )
