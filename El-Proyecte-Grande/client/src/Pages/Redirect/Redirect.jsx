@@ -6,8 +6,8 @@ const Redirect = () => {
 
     setTimeout(() => {
         navigate('/')
+        window.location.reload()
       }, 3000);
-
 
   return (
       <div className="full-height">
@@ -15,22 +15,22 @@ const Redirect = () => {
               <h1 className="heading">Thank you!</h1>
               <h2 className="sub-heading">Reservation successful</h2>
               <p>Now redirecting to the main page!</p>
-              <div class="loader">
-                  <div class="circle">
-                      <div class="dot"></div>
-                      <div class="outline"></div>
+              <div className="loader">
+                  <div className="circle">
+                      <div className="dot"></div>
+                      <div className="outline"></div>
                   </div>
-                  <div class="circle">
-                      <div class="dot"></div>
-                      <div class="outline"></div>
+                  <div className="circle">
+                      <div className="dot"></div>
+                      <div className="outline"></div>
                   </div>
-                  <div class="circle">
-                      <div class="dot"></div>
-                      <div class="outline"></div>
+                  <div className="circle">
+                      <div className="dot"></div>
+                      <div className="outline"></div>
                   </div>
-                  <div class="circle">
-                      <div class="dot"></div>
-                      <div class="outline"></div>
+                  <div className="circle">
+                      <div className="dot"></div>
+                      <div className="outline"></div>
                   </div>
               </div>
           </div>
