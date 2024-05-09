@@ -1,9 +1,10 @@
 using AspCinema.Models;
+using El_Proyecte_Grande.Models;
 
 namespace El_Proyecte_Grande.Services.Repositories;
 
 public interface ISeatRepository
 {
-    IList<Seat> GetAll();
-    void AddSeat(Seat seat);
+    Seat? GetById(int id);
+    void AddReservedSeat(SeatReserved reservedSeat);
 }

@@ -17,7 +17,8 @@ public class AuditoriumRepository : IAuditoriumRepository
     public Auditorium GetById(int id)
     {
         var auditorium = _context.Auditoriums
-            .Include(a => a.Seats.Where(s => s.Auditorium.Id == id))
+            .Include(a => a.Seats
+                .Where(s => s.Auditorium.Id == id))
             .FirstOrDefault(a => a.Id == id);
 
         return auditorium;

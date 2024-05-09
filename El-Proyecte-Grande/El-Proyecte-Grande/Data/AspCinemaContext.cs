@@ -17,8 +17,7 @@ public class AspCinemaContext : IdentityDbContext<ApplicationUser, IdentityRole,
     public DbSet<Auditorium> Auditoriums { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<Seat> Seats { get; set; }
-    
-    public DbSet<SeatReserved> SeatReserveds { get; set; }
+    public DbSet<SeatReserved> ReservedSeats { get; set; }
 
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)

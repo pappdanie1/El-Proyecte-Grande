@@ -73,7 +73,6 @@ void AddServices()
     builder.Services.AddSingleton<IJsonProcessor, JsonProcessor>();
     builder.Services.AddSingleton<IOmdbApi, OmdbApi>();
     builder.Services.AddScoped<ISeedScreenings, SeedScreenings>();
-    builder.Services.AddScoped<ISeedSeats, SeedSeats>();
     builder.Services.AddScoped<IScreeningRepository, ScreeningRepository>();
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();

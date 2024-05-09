@@ -16,7 +16,10 @@ public class ReservationRepository : IReservationRepository
     //All reservations for a given user
     public IList<Reservation> GetAllByUser(string userName)
     {
-        return _context.Reservations.Where(r => r.Customer.UserName == userName).ToList();
+        return _context.Reservations.Where(r => r.Customer.UserName == userName)
+            .Include(r => r.Customer)
+            .Include(r => r.Screening)
+            .Include(r => r.ReservedSeats).ToList();
     }
 
     //All reservations for a given screening

@@ -23,7 +23,11 @@ public class ScreeningRepository : IScreeningRepository
 
     public Screening? GetById(int id)
     {
-        return _context.Screenings.Include(s => s.Auditorium.Seats).Include(s => s.Auditorium).Include(s => s.Movie).FirstOrDefault(s => s.Id == id);
+        return _context.Screenings.Include(s => s.Auditorium.Seats)
+            .Include(s => s.Auditorium)
+            .Include(s => s.Movie)
+            .Include(s => s.Reservations)
+            .FirstOrDefault(s => s.Id == id);
     }
 
     public void AddScreening(Screening screening)

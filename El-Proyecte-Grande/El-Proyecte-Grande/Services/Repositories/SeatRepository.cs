@@ -1,5 +1,6 @@
 using AspCinema.Models;
 using El_Proyecte_Grande.Data;
+using El_Proyecte_Grande.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace El_Proyecte_Grande.Services.Repositories;
@@ -12,15 +13,15 @@ public class SeatRepository : ISeatRepository
     {
         _context = context;
     }
-
-    public IList<Seat> GetAll()
+    
+    public Seat? GetById(int id)
     {
-        return _context.Seats.Include(s => s.Auditorium).ToList();
+        return _context.Seats.FirstOrDefault(s => s.Id == id);
     }
 
-    public void AddSeat(Seat seat)
+    public void AddReservedSeat(SeatReserved reservedSeat)
     {
-        _context.Add(seat);
+        _context.ReservedSeats.Add(reservedSeat);
         _context.SaveChanges();
     }
 }

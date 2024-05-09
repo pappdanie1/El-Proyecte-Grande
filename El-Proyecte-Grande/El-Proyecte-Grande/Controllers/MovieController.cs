@@ -130,16 +130,4 @@ public class MovieController : ControllerBase
         }
     }
     
-    [HttpGet("Test"), Authorize(Roles = "Admin")]
-    public ActionResult Test()
-    {
-        try
-        {
-            return Ok("test");
-        }
-        catch (Exception e)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-        }
-    }
 }
