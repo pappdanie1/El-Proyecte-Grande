@@ -68,7 +68,7 @@ function MovieInfo({data, screenings}) {
           <h2>Buy your tickets</h2>
           <Schedule data={data}/>
           <hr className="divider" />
-          <h4>Screenings today:</h4>
+          <h4 className="screenings-today" >Screenings today:</h4>
           <Screenings screenings={screenings} movie={movie}/>
         </div>
       </div>

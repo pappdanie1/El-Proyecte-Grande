@@ -3,9 +3,6 @@ import {Link} from "react-router-dom";
 
 function Screenings({ screenings, movie }) {
 
-  console.log(screenings)
-  console.log("----------")
-  console.log(movie)
   return (
     <div className="screening-times">
       {screenings

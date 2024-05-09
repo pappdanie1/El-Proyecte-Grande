@@ -53,7 +53,7 @@ function LoginPage({setIsAuthenticated}) {
   };
 
   return (
-    <div>
+    <div className="full-height">
       {!loginSuccessful ? (
         <LoginForm
           formData={formData}
