@@ -7,14 +7,17 @@ const Header = ({ isAuthenticated, setIsAuthenticated }) => {
     e.preventDefault();
     localStorage.removeItem('token');
     localStorage.removeItem('name');
-    localStorage.removeItem('phone')
+    localStorage.removeItem('phone');
+    localStorage.removeItem('username');
     setIsAuthenticated(false);
   }
 
   return (
     <nav className="navbar">
       <div className="left">
-        <div className="cinema-name">Cinema</div>
+        <Link to="/">
+          <div className="cinema-name">Cinema</div>
+        </Link>
       </div>
       <div className="center">
         <ul className="nav-links">
@@ -41,22 +44,21 @@ const Header = ({ isAuthenticated, setIsAuthenticated }) => {
             </button>
           </form>
         </div>
-        {
-          isAuthenticated ? (
-            <button onClick={handleClick} className="btn">
-              Logout
-            </button>
-          ) : (
-            <>
-              <Link to="/register" className="btn">
-                Register
-              </Link>
-              <Link to="/login" className="btn">
-                Login
-              </Link>
-            </>
-          )
-        }
+        {isAuthenticated ? (
+          <>
+            <Link className="btn" to={`/profile/${localStorage.getItem("username")}`} >Profile</Link>
+            <button onClick={handleClick} className="btn">Logout</button>
+          </>
+        ) : (
+          <>
+            <Link to="/register" className="btn">
+              Register
+            </Link>
+            <Link to="/login" className="btn">
+              Login
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
