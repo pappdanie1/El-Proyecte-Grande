@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace El_Proyecte_Grande.Migrations
 {
     [DbContext(typeof(AspCinemaContext))]
-    [Migration("20240508073343_ElProyecteGrande")]
-    partial class ElProyecteGrande
+    [Migration("20240508173741_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,50 +24,6 @@ namespace El_Proyecte_Grande.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("AspCinema.Models.Auditorium", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Auditoriums");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Audit1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Audit2"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Audit3"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Audit4"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Audit5"
-                        });
-                });
 
             modelBuilder.Entity("AspCinema.Models.Movie", b =>
                 {
@@ -131,32 +87,6 @@ namespace El_Proyecte_Grande.Migrations
                     b.ToTable("Reservations");
                 });
 
-            modelBuilder.Entity("AspCinema.Models.Screening", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AuditoriumId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuditoriumId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("Screenings");
-                });
-
             modelBuilder.Entity("AspCinema.Models.Seat", b =>
                 {
                     b.Property<int>("Id")
@@ -179,34 +109,6 @@ namespace El_Proyecte_Grande.Migrations
                     b.HasIndex("AuditoriumId");
 
                     b.ToTable("Seats");
-                });
-
-            modelBuilder.Entity("AspCinema.Models.SeatReserved", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ReservationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ScreeningId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SeatId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReservationId");
-
-                    b.HasIndex("ScreeningId");
-
-                    b.HasIndex("SeatId");
-
-                    b.ToTable("SeatReserveds");
                 });
 
             modelBuilder.Entity("El_Proyecte_Grande.Data.ApplicationUser", b =>
@@ -277,6 +179,104 @@ namespace El_Proyecte_Grande.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("El_Proyecte_Grande.Models.Auditorium", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Auditoriums");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Audit1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Audit2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Audit3"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Audit4"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Audit5"
+                        });
+                });
+
+            modelBuilder.Entity("El_Proyecte_Grande.Models.Screening", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AuditoriumId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuditoriumId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("Screenings");
+                });
+
+            modelBuilder.Entity("El_Proyecte_Grande.Models.SeatReserved", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScreeningId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SeatId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReservationId");
+
+                    b.HasIndex("ScreeningId");
+
+                    b.HasIndex("SeatId");
+
+                    b.ToTable("ReservedSeats");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -420,7 +420,7 @@ namespace El_Proyecte_Grande.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("AspCinema.Models.Screening", "Screening")
+                    b.HasOne("El_Proyecte_Grande.Models.Screening", "Screening")
                         .WithMany("Reservations")
                         .HasForeignKey("ScreeningId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -431,9 +431,20 @@ namespace El_Proyecte_Grande.Migrations
                     b.Navigation("Screening");
                 });
 
-            modelBuilder.Entity("AspCinema.Models.Screening", b =>
+            modelBuilder.Entity("AspCinema.Models.Seat", b =>
                 {
-                    b.HasOne("AspCinema.Models.Auditorium", "Auditorium")
+                    b.HasOne("El_Proyecte_Grande.Models.Auditorium", "Auditorium")
+                        .WithMany("Seats")
+                        .HasForeignKey("AuditoriumId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Auditorium");
+                });
+
+            modelBuilder.Entity("El_Proyecte_Grande.Models.Screening", b =>
+                {
+                    b.HasOne("El_Proyecte_Grande.Models.Auditorium", "Auditorium")
                         .WithMany("Screenings")
                         .HasForeignKey("AuditoriumId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -450,18 +461,7 @@ namespace El_Proyecte_Grande.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("AspCinema.Models.Seat", b =>
-                {
-                    b.HasOne("AspCinema.Models.Auditorium", "Auditorium")
-                        .WithMany("Seats")
-                        .HasForeignKey("AuditoriumId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Auditorium");
-                });
-
-            modelBuilder.Entity("AspCinema.Models.SeatReserved", b =>
+            modelBuilder.Entity("El_Proyecte_Grande.Models.SeatReserved", b =>
                 {
                     b.HasOne("AspCinema.Models.Reservation", "Reservation")
                         .WithMany("ReservedSeats")
@@ -469,7 +469,7 @@ namespace El_Proyecte_Grande.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("AspCinema.Models.Screening", "Screening")
+                    b.HasOne("El_Proyecte_Grande.Models.Screening", "Screening")
                         .WithMany("ReservedSeats")
                         .HasForeignKey("ScreeningId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -539,13 +539,6 @@ namespace El_Proyecte_Grande.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AspCinema.Models.Auditorium", b =>
-                {
-                    b.Navigation("Screenings");
-
-                    b.Navigation("Seats");
-                });
-
             modelBuilder.Entity("AspCinema.Models.Movie", b =>
                 {
                     b.Navigation("Screenings");
@@ -553,13 +546,6 @@ namespace El_Proyecte_Grande.Migrations
 
             modelBuilder.Entity("AspCinema.Models.Reservation", b =>
                 {
-                    b.Navigation("ReservedSeats");
-                });
-
-            modelBuilder.Entity("AspCinema.Models.Screening", b =>
-                {
-                    b.Navigation("Reservations");
-
                     b.Navigation("ReservedSeats");
                 });
 
@@ -571,6 +557,20 @@ namespace El_Proyecte_Grande.Migrations
             modelBuilder.Entity("El_Proyecte_Grande.Data.ApplicationUser", b =>
                 {
                     b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("El_Proyecte_Grande.Models.Auditorium", b =>
+                {
+                    b.Navigation("Screenings");
+
+                    b.Navigation("Seats");
+                });
+
+            modelBuilder.Entity("El_Proyecte_Grande.Models.Screening", b =>
+                {
+                    b.Navigation("Reservations");
+
+                    b.Navigation("ReservedSeats");
                 });
 #pragma warning restore 612, 618
         }

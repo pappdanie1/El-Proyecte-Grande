@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace El_Proyecte_Grande.Migrations
 {
     /// <inheritdoc />
-    public partial class ElProyecteGrande : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -261,7 +261,7 @@ namespace El_Proyecte_Grande.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SeatReserveds",
+                name: "ReservedSeats",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -272,19 +272,19 @@ namespace El_Proyecte_Grande.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SeatReserveds", x => x.Id);
+                    table.PrimaryKey("PK_ReservedSeats", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SeatReserveds_Reservations_ReservationId",
+                        name: "FK_ReservedSeats_Reservations_ReservationId",
                         column: x => x.ReservationId,
                         principalTable: "Reservations",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SeatReserveds_Screenings_ScreeningId",
+                        name: "FK_ReservedSeats_Screenings_ScreeningId",
                         column: x => x.ScreeningId,
                         principalTable: "Screenings",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SeatReserveds_Seats_SeatId",
+                        name: "FK_ReservedSeats_Seats_SeatId",
                         column: x => x.SeatId,
                         principalTable: "Seats",
                         principalColumn: "Id");
@@ -359,6 +359,21 @@ namespace El_Proyecte_Grande.Migrations
                 column: "ScreeningId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ReservedSeats_ReservationId",
+                table: "ReservedSeats",
+                column: "ReservationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReservedSeats_ScreeningId",
+                table: "ReservedSeats",
+                column: "ScreeningId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReservedSeats_SeatId",
+                table: "ReservedSeats",
+                column: "SeatId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Screenings_AuditoriumId",
                 table: "Screenings",
                 column: "AuditoriumId");
@@ -367,21 +382,6 @@ namespace El_Proyecte_Grande.Migrations
                 name: "IX_Screenings_MovieId",
                 table: "Screenings",
                 column: "MovieId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SeatReserveds_ReservationId",
-                table: "SeatReserveds",
-                column: "ReservationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SeatReserveds_ScreeningId",
-                table: "SeatReserveds",
-                column: "ScreeningId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SeatReserveds_SeatId",
-                table: "SeatReserveds",
-                column: "SeatId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Seats_AuditoriumId",
@@ -408,7 +408,7 @@ namespace El_Proyecte_Grande.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "SeatReserveds");
+                name: "ReservedSeats");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
