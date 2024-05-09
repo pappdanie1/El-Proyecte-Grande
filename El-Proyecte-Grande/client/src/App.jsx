@@ -12,6 +12,7 @@ import Footer from "./Components/Footer";
 import Auditorium from "./Components/Auditorium";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Redirect from "./Pages/Redirect/Redirect";
+import Profile from "./Pages/Profile/Profile";
 
 function App() {
   const [data, setData] = useState([]);
@@ -72,6 +73,7 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
         <Route path="/reservation" element={<Reservation screening={screening} selectedSeats={selectedSeats}/>}/>
         <Route path="/redirect" element={<Redirect />} /> 
+        <Route path="/profile/:username" element={<ProtectedRoute><Profile /></ProtectedRoute>}/>
       </Routes>
       <Footer />
     </BrowserRouter>
