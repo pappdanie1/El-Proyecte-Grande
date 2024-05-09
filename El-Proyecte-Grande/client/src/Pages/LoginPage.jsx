@@ -40,6 +40,7 @@ function LoginPage({setIsAuthenticated}) {
       const data = await response.json();
       localStorage.setItem("token", data.token);
       localStorage.setItem("name", data.name)
+      localStorage.setItem("username", data.userName)
       localStorage.setItem("phone", data.phoneNumber)
       localStorage.setItem("email", data.email)
       setIsAuthenticated(true);
