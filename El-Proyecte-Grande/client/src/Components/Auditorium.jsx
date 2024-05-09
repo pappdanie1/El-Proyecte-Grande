@@ -47,8 +47,6 @@ function Auditorium({ setScreening, screening, seats, setSeats, selectedSeats, s
     });
   };
 
-  console.log(selectedSeats);
-
   if (loading) {
     return <Loading/>
   }
