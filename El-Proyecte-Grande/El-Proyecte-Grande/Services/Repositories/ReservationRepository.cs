@@ -19,7 +19,11 @@ public class ReservationRepository : IReservationRepository
         return _context.Reservations.Where(r => r.Customer.UserName == userName)
             .Include(r => r.Customer)
             .Include(r => r.Screening)
-            .Include(r => r.ReservedSeats).ToList();
+            .Include(r => r.Screening.Movie)
+            .Include(r => r.Screening.Auditorium)
+            .Include(r => r.ReservedSeats)
+            .ThenInclude(r => r.Seat).ToList();
+
     }
 
     //All reservations for a given screening
