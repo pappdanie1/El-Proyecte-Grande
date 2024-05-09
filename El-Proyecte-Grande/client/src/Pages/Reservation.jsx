@@ -4,12 +4,12 @@ import './Pages_css/Reservation.css'
 
 const  Reservation = ({ screening, selectedSeats }) => {
     const [seats, setSeats] = useState([]);
+    const [seatIds, setSeatIds] = useState([]);
     const [errorMessage, setErrorMessage] = useState();
     const [successful, setSuccessful] = useState(false);
     
     const findSeat = (selectedSeats) => {
         const seatArray = []
-        console.log(selectedSeats);
 
         selectedSeats.forEach(seat => {
             const findSeat = screening.auditorium.seats.find(s => s.id == seat)
@@ -18,61 +18,41 @@ const  Reservation = ({ screening, selectedSeats }) => {
         return seatArray;
     }
 
+    const findSeatId = (selectedSeats) => {
+        const seatArray = []
+
+        selectedSeats.forEach(seat => {
+            const findSeat = screening.auditorium.seats.find(s => s.id == seat)
+                seatArray.push(findSeat.id)
+        });
+        return seatArray;
+    }
+
     useEffect(() => {
         setSeats(findSeat(selectedSeats))
+        setSeatIds(findSeatId(selectedSeats))
     }, [])
 
     const requestBody = {
         "id": 0,
-        "seats": seats.map(seat => ({
-            "id": 0, // You may need to assign a unique ID if required
-            "seat": {
-                "id": seat.id, // Assuming seatId corresponds to seat ID
-                "row": seat.row,
-                "number": seat.number,
-                "auditorium": {
-                    "id": screening.auditorium.id,
-                    "name": screening.auditorium.name,
-                    "seatNo": screening.auditorium.seatNo
-                }
-            },
-            "screening": {
-                "id": screening.id, // If you need screening ID, you can assign it here
-                "start": screening.start,
-                "auditorium": {
-                    "id": screening.auditorium.id,
-                    "name": screening.auditorium.name,
-                },
-                "movie": {
-                    "id": screening.movie.id,
-                    "title": screening.movie.title,
-                    "director": screening.movie.director,
-                    "cast": screening.movie.cast,
-                    "description": screening.movie.description,
-                    "durationInSec": screening.movie.durationInSec,
-                    "poster": screening.movie.poster,
-                    "genres": screening.movie.genres
-                }
-            }
-        })),
         "screening": {
-            "id": screening.id, // If you need screening ID, you can assign it here
-                "start": screening.start,
-                "auditorium": {
-                    "id": screening.auditorium.id,
-                    "name": screening.auditorium.name,
-                },
-                "movie": {
-                    "id": screening.movie.id,
-                    "title": screening.movie.title,
-                    "director": screening.movie.director,
-                    "cast": screening.movie.cast,
-                    "description": screening.movie.description,
-                    "durationInSec": screening.movie.durationInSec,
-                    "poster": screening.movie.poster,
-                    "genres": screening.movie.genres
-                }
-          },
+            "id": 0,
+            "start": "2024-05-08T15:44:32.951Z",
+            "auditorium": {
+                "id": 0,
+                "name": "string"
+            },
+            "movie": {
+                "id": 0,
+                "title": "string",
+                "director": "string",
+                "cast": "string",
+                "description": "string",
+                "durationInSec": "string",
+                "poster": "string",
+                "genres": "string"
+            }
+        },
         "customer": {
             "id": "string",
             "userName": "string",
@@ -85,7 +65,7 @@ const  Reservation = ({ screening, selectedSeats }) => {
             "concurrencyStamp": "string",
             "phoneNumberConfirmed": true,
             "twoFactorEnabled": true,
-            "lockoutEnd": "2024-05-07T16:11:32.587Z",
+            "lockoutEnd": "2024-05-08T15:44:32.951Z",
             "lockoutEnabled": true,
             "accessFailedCount": 0,
             "name": "string",
@@ -95,10 +75,12 @@ const  Reservation = ({ screening, selectedSeats }) => {
 
     const handleReserve = async () => {
         try {
-            const response = await fetch('/api/Reservation/AddReservation', {
-                method: "POST",
+            const seatParams = seatIds.map(id => `seatIds=${id}`).join('&');
+            const url = `/api/Reservation/AddReservation?${seatParams}&screeningId=${screening.id}`;
+            const response = await fetch(url, {
+                method: 'Post',
                 headers: { 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}` },
+                        'Authorization': `Bearer ${localStorage.getItem('token')}` },
                 body: JSON.stringify(requestBody)
             })
 
@@ -106,16 +88,15 @@ const  Reservation = ({ screening, selectedSeats }) => {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData);
+                throw new Error({});
             }
 
         } catch (error) {
             setErrorMessage(error.message);
+            console.error(error.message);
         }
     }
-    
 
-    console.log(seats);
 
     return (
         <div>
