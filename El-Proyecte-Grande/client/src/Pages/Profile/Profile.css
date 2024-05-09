@@ -1,0 +1,173 @@
+.profile-ticket {
+	margin: auto;
+  margin-bottom: 30px;
+  margin-top: 20px;
+	display: flex;
+	background: rgb(255, 247, 237);
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.profile-left {
+	display: flex;
+}
+
+.profile-image {
+	height: 250px;
+	width: 250px;
+	background-size: contain;
+
+  margin-left: -50px;
+}
+
+.poster-image {
+  height: 240px;
+  width: 185px;
+  padding-left: -75px;
+}
+
+.profile-admit-one {
+	position: absolute;
+	color: darkgray;
+	height: 250px;
+	padding: 0 10px;
+	letter-spacing: 0.15em;
+	display: flex;
+	text-align: center;
+	justify-content: space-around;
+	writing-mode: vertical-rl;
+	transform: rotate(-180deg);
+}
+
+.profile-admit-one span:nth-child(2) {
+	color: white;
+	font-weight: 700;
+}
+
+.profile-left .profile-movie-image {
+	height: 250px;
+	width: 250px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+	padding: 5px;
+}
+
+.profile-ticket-info {
+	padding: 10px 30px;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	justify-content: space-between;
+	align-items: center;
+  width: 400px;
+}
+
+.profile-date {
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+	padding: 5px 0;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.profile-date span {
+	width: 100px;
+}
+
+.profile-date span:first-child {
+	text-align: left;
+}
+
+.profile-date span:last-child {
+	text-align: right;
+}
+
+.profile-date .june-29 {
+	color: #d83565;
+	font-size: 20px;
+}
+
+.profile-show-name {
+	font-size: 10px;
+	font-family: "Nanum Pen Script", cursive;
+	color: #d83565;
+}
+
+.profile-show-name h1 {
+	font-size: 20px;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	color: #074173ce;
+}
+
+.profile-time {
+	color: #074173ce;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	font-weight: 700;
+}
+
+.profile-time span {
+	font-weight: 400;
+	color: gray;
+}
+
+.profile-left .time {
+	font-size: 16px;
+}
+
+
+.profile-location {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+	padding-top: 8px;
+	border-top: 1px solid gray;
+}
+
+.profile-location .separator {
+	font-size: 20px;
+}
+
+.profile-right {
+	width: 180px;
+	border-left: 1px dashed #404040;
+}
+
+.profile-right .admit-one {
+	color: darkgray;
+}
+
+.profile-right .profile-admit-one span:nth-child(2) {
+	color: gray;
+}
+
+.profile-right .profile-right-info-container {
+	height: 250px;
+	padding: 10px 10px 10px 35px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.profile-right .profile-show-name h1 {
+	font-size: 18px;
+}
+
+.profile-barcode {
+	height: 100px;
+}
+
+.profile-barcode img {
+	height: 100%;
+}
+
+.profile-right .profile-movie-image {
+	color: gray;
+}

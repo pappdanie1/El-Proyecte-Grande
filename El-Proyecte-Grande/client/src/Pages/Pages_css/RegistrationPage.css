@@ -1,0 +1,5 @@
+.full-height {
+    min-height: 67.9vh; /* Ensure the div is at least 100% of the viewport height */
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack children vertically */
+  }

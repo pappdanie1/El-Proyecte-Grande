@@ -1,0 +1,25 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  display: flex;
+  justify-content: center;
+}
+
+th, td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 12px;
+  padding-right: 100px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+td {
+  display: inline-block;
+  vertical-align: top; /* Align content to the top of the cell */
+  width: 50%; /* Each cell takes 50% of the table width */
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+
