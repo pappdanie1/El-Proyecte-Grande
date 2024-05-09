@@ -6,6 +6,7 @@ import Loading from "./Loading.jsx";
 
 function Auditorium({ setScreening, screening, seats, setSeats, selectedSeats, setSelectedSeats }) {
   const [loading, setLoading] = useState(true);
+  const [reserved, setReserved] = useState([]);
 
   const { id } = useParams();
 
@@ -17,9 +18,20 @@ function Auditorium({ setScreening, screening, seats, setSeats, selectedSeats, s
       setScreening(jsonData)
       setLoading(false);
     };
-
     FetchAuditoriums();
+
+    const fetchReserved = async () => {
+      const response = await fetch(`/api/Seat/ReservedByScreening?screeningId=${id}`, {
+        headers: { 'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}` },
+      });
+      const jsonData = await response.json();
+      setReserved(jsonData)
+    }
+    fetchReserved();
   }, [id]);
+
+  console.log(selectedSeats);
 
   // Function to group seats by row
   const groupSeatsByRow = () => {
@@ -47,31 +59,35 @@ function Auditorium({ setScreening, screening, seats, setSeats, selectedSeats, s
     });
   };
 
+
   if (loading) {
     return <Loading/>
   }
 
   return (
-    <div className="auditorium">
-      <h2>SCREEN</h2>
-      <h3>{screening.movie.title}</h3>
-      <p>Screening time: {screening.start.split("T").join(" ")}</p>
-      <div className="seats">
-        {Object.keys(seatsByRow).map((row) => (
-          <div key={row} className="seat-row">
-            <div className="row-number">Row: {row} </div>
-            {seatsByRow[row].map((seat) => (
-              <Seat
-                key={seat.id}
-                seat={seat}
-                isSelected={selectedSeats.includes(seat.id)}
-                onSelect={handleSeatSelect}
-              />
-            ))}
-          </div>
-        ))}
+    <div className="full-height" >
+      <div className="auditorium">
+        <h2 className="audit-screen-title" >SCREEN</h2>
+        <h3 className="audit-movie-title" >{screening.movie.title}</h3>
+        <p className="audit-screening-time" >Screening time: {screening.start.split("T").join(" ")}</p>
+        <div className="seats">
+          {Object.keys(seatsByRow).map((row) => (
+            <div key={row} className="seat-row">
+              <div className="row-number">Row: {row} </div>
+              {seatsByRow[row].map((seat) => (
+                <Seat
+                  key={seat.id}
+                  seat={seat}
+                  isSelected={selectedSeats.includes(seat.id)}
+                  onSelect={handleSeatSelect}
+                  isReserved={reserved.find(r => r.seat.id == seat.id) ? true : false}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+        <Link to="/reservation" className="screening-time" >Reserve</Link>
       </div>
-        <Link to="/reservation">Reserve</Link>
     </div>
   );
 }
