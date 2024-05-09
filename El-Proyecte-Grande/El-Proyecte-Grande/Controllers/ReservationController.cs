@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using AspCinema.Models;
 using El_Proyecte_Grande.Data;
-using El_Proyecte_Grande.Services;
+using El_Proyecte_Grande.Models;
 using El_Proyecte_Grande.Services.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -10,16 +10,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace El_Proyecte_Grande.Controllers;
 
 [ApiController]
-[Route("[controller]"), Authorize(Roles = "User, Admin")]
+[Route("[controller]"),Authorize(Roles = "User, Admin")]
 public class ReservationController : ControllerBase
 {
     private readonly IReservationRepository _reservationRepository;
+    private readonly IScreeningRepository _screeningRepository;
+    private readonly ISeatRepository _seatRepository;
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public ReservationController(IReservationRepository reservationRepository, UserManager<ApplicationUser> userManager)
+    public ReservationController(IReservationRepository reservationRepository, UserManager<ApplicationUser> userManager, IScreeningRepository screeningRepository, ISeatRepository seatRepository)
     {
         _reservationRepository = reservationRepository;
         _userManager = userManager;
+        _screeningRepository = screeningRepository;
+        _seatRepository = seatRepository;
     }
 
 
@@ -63,7 +67,7 @@ public class ReservationController : ControllerBase
     }
 
     [HttpPost("AddReservation")]
-    public async Task<ActionResult> AddReservation(Reservation reservation)
+    public async Task<ActionResult> AddReservation([FromBody] Reservation reservation, [FromQuery] List<int> seatIds, int screeningId)
     {
         try
         {
@@ -72,12 +76,26 @@ public class ReservationController : ControllerBase
                 return BadRequest(ModelState);
             }
             var userId = User.FindAll(ClaimTypes.NameIdentifier).Skip(1).FirstOrDefault().Value;
-            Console.WriteLine(userId);
             var user = await _userManager.FindByIdAsync(userId);
+            var screening = _screeningRepository.GetById(screeningId);
             reservation.Customer = user;
-            
+            reservation.Screening = screening;
             _reservationRepository.AddReservation(reservation);
-            return Ok(reservation);
+
+            foreach (var seatId in seatIds)
+            {
+                var seat = _seatRepository.GetById(seatId);
+                var seatReserved = new SeatReserved
+                {
+                    Seat = seat,
+                    Reservation = reservation,
+                    Screening = screening
+                };
+                _seatRepository.AddReservedSeat(seatReserved);
+            }
+            
+            
+            return Ok(reservation.ReservedSeats);
         }
         catch (Exception e)
         {
