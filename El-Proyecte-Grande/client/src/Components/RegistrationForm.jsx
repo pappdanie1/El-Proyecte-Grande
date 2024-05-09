@@ -14,6 +14,14 @@ function RegistrationForm({ handleChange, handleSubmit, formData }) {
             <input type="text" name="username" value={formData.username} onChange={handleChange} required />
           </div>
           <div>
+            <label>Full name:</label>
+            <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+          </div>
+          <div>
+            <label>Phone number:</label>
+            <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} required />
+          </div>
+          <div>
             <label>Password:</label>
             <input type="password" name="password" value={formData.password} onChange={handleChange} required />
           </div>
