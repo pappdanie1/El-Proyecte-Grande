@@ -19,6 +19,12 @@ public class SeatRepository : ISeatRepository
         return _context.Seats.FirstOrDefault(s => s.Id == id);
     }
 
+    public List<SeatReserved> GetReservedByScreening(int screeningId)
+    {
+        return _context.ReservedSeats.Where(r => r.Screening.Id == screeningId)
+            .Include(r => r.Seat).ToList();
+    }
+
     public void AddReservedSeat(SeatReserved reservedSeat)
     {
         _context.ReservedSeats.Add(reservedSeat);
