@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import './Pages_css/Reservation.css'
 
-const  Reservation = ({ screening, selectedSeats }) => {
+const  Reservation = ({ screening, selectedSeats}) => {
     const [seats, setSeats] = useState([]);
     const [seatIds, setSeatIds] = useState([]);
     const [errorMessage, setErrorMessage] = useState();
@@ -89,7 +89,6 @@ const  Reservation = ({ screening, selectedSeats }) => {
                 const errorData = await response.json();
                 throw new Error({});
             }
-
             navigate('/redirect')
 
         } catch (error) {
@@ -97,7 +96,6 @@ const  Reservation = ({ screening, selectedSeats }) => {
             console.error(error.message);
         }
     }
-
 
     return (
         <div className="full-height" >

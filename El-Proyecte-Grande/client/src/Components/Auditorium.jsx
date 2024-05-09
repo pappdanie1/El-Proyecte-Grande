@@ -4,9 +4,10 @@ import Seat from "./Seat.jsx";
 import "./Component_css/Auditorium.css"
 import Loading from "./Loading.jsx";
 
-function Auditorium({ setScreening, screening, seats, setSeats, selectedSeats, setSelectedSeats }) {
+function Auditorium({ setScreening, screening, seats, setSeats, selectedSeats, setSelectedSeats}) {
   const [loading, setLoading] = useState(true);
   const [reserved, setReserved] = useState([]);
+
 
   const { id } = useParams();
 
@@ -30,8 +31,6 @@ function Auditorium({ setScreening, screening, seats, setSeats, selectedSeats, s
     }
     fetchReserved();
   }, [id]);
-
-  console.log(selectedSeats);
 
   // Function to group seats by row
   const groupSeatsByRow = () => {
