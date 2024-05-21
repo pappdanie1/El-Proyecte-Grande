@@ -31,16 +31,27 @@ function App() {
   };
 
   const filterScreeningsByDay = (screenings, dayIndex) => {
-    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const dayNames = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
     const dayName = dayNames[dayIndex];
-    return screenings.filter(screening => {
+    return screenings.filter((screening) => {
       const screeningDate = new Date(screening.start);
-      return screeningDate.toLocaleDateString('en-US', { weekday: 'long' }) === dayName;
+      return (
+        screeningDate.toLocaleDateString("en-US", { weekday: "long" }) ===
+        dayName
+      );
     });
   };
 
   const filteredScreenings = filterScreeningsByDay(screenings, selectedDay);
-  console.log(filteredScreenings);
+  //console.log(filteredScreenings);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,6 +67,15 @@ function App() {
     fetchData();
   }, []);
 
+  const logoutUser = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("loginTime");
+    localStorage.removeItem("name");
+    localStorage.removeItem("phone");
+    localStorage.removeItem("username");
+    setIsAuthenticated(false);
+  };
+
   const redirectToHomeIfLoggedIn = () => {
     return isAuthenticated ? <Navigate to="/" /> : null;
   };
@@ -65,15 +85,32 @@ function App() {
       <Header
         isAuthenticated={isAuthenticated}
         setIsAuthenticated={setIsAuthenticated}
+        logoutUser={logoutUser}
       />
       <Routes>
         <Route
           path="/"
-          element={<Home data={data} screenings={screenings} handleSelectDay={handleSelectDay} selectedDay={selectedDay} filteredScreenings={filteredScreenings}/>}
+          element={
+            <Home
+              data={data}
+              screenings={screenings}
+              handleSelectDay={handleSelectDay}
+              selectedDay={selectedDay}
+              filteredScreenings={filteredScreenings}
+            />
+          }
         />
         <Route
           path="movieDetails/:movieId"
-          element={<MovieDetails data={data} screenings={screenings} handleSelectDay={handleSelectDay} selectedDay={selectedDay} filteredScreenings={filteredScreenings}/>}
+          element={
+            <MovieDetails
+              data={data}
+              screenings={screenings}
+              handleSelectDay={handleSelectDay}
+              selectedDay={selectedDay}
+              filteredScreenings={filteredScreenings}
+            />
+          }
         />
         <Route
           path="/register"
@@ -87,11 +124,37 @@ function App() {
             )
           }
         />
-        <Route path="/auditorium/:id" element={<ProtectedRoute><Auditorium setScreening={setScreening} screening={screening} setSeats={setSeats} seats={seats} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats}/></ProtectedRoute>}/>
+        <Route
+          path="/auditorium/:id"
+          element={
+            <ProtectedRoute>
+              <Auditorium
+                setScreening={setScreening}
+                screening={screening}
+                setSeats={setSeats}
+                seats={seats}
+                selectedSeats={selectedSeats}
+                setSelectedSeats={setSelectedSeats}
+              />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<PageNotFound />} />
-        <Route path="/reservation" element={<Reservation screening={screening} selectedSeats={selectedSeats}/>}/>
-        <Route path="/redirect" element={<Redirect />} /> 
-        <Route path="/profile/:username" element={<ProtectedRoute><Profile /></ProtectedRoute>}/>
+        <Route
+          path="/reservation"
+          element={
+            <Reservation screening={screening} selectedSeats={selectedSeats} />
+          }
+        />
+        <Route path="/redirect" element={<Redirect />} />
+        <Route
+          path="/profile/:username"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Footer />
     </BrowserRouter>

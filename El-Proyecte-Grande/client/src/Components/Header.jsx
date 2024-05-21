@@ -1,7 +1,8 @@
 import "./Component_css/Header.css";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
-const Header = ({ isAuthenticated, setIsAuthenticated }) => {
+const Header = ({ isAuthenticated, setIsAuthenticated, logoutUser }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -9,8 +10,26 @@ const Header = ({ isAuthenticated, setIsAuthenticated }) => {
     localStorage.removeItem('name');
     localStorage.removeItem('phone');
     localStorage.removeItem('username');
+    localStorage.removeItem("loginTime");
     setIsAuthenticated(false);
   }
+
+    // Check if token is expired
+    useEffect(() => {
+      const loginTime = localStorage.getItem("loginTime");
+      console.log(loginTime);
+      if (loginTime) {
+        // elapsed Time since login in milliseconds
+        const elapsedTime = Date.now() - parseInt(loginTime, 10);
+        console.log(elapsedTime);
+        if (elapsedTime > 1 * 60 * 1000) {
+          logoutUser();
+        } else {
+          // Set a timeout for the remaining time
+          setTimeout(logoutUser, 120 * 60 * 1000 - elapsedTime);
+        }
+      }
+    }, [isAuthenticated, logoutUser]);
 
   return (
     <nav className="navbar">

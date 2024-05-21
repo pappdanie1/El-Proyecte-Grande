@@ -43,6 +43,7 @@ function LoginPage({setIsAuthenticated}) {
       localStorage.setItem("username", data.userName)
       localStorage.setItem("phone", data.phoneNumber)
       localStorage.setItem("email", data.email)
+      localStorage.setItem("loginTime", Date.now());
       setIsAuthenticated(true);
 
       setLoginSuccessful(true);
