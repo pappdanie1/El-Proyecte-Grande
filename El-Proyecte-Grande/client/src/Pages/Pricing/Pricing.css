@@ -1,0 +1,20 @@
+.pricing-container {
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid #dddddd;
+  padding: 10px;
+  text-align: center;
+  height: 60px; 
+  width: 200px;
+}
+
+
+
