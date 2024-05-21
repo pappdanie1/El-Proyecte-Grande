@@ -17,11 +17,9 @@ const Header = ({ isAuthenticated, setIsAuthenticated, logoutUser }) => {
     // Check if token is expired
     useEffect(() => {
       const loginTime = localStorage.getItem("loginTime");
-      console.log(loginTime);
       if (loginTime) {
         // elapsed Time since login in milliseconds
         const elapsedTime = Date.now() - parseInt(loginTime, 10);
-        console.log(elapsedTime);
         if (elapsedTime > 120 * 60 * 1000) {
           logoutUser();
         } else {
@@ -41,7 +39,7 @@ const Header = ({ isAuthenticated, setIsAuthenticated, logoutUser }) => {
       <div className="center">
         <ul className="nav-links">
           <li>
-            <a href="#">Now Playing</a>
+            <a href="/">Now Playing</a>
           </li>
           <li>
             <a href="#">Offers</a>
