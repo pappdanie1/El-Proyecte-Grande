@@ -22,7 +22,7 @@ const Header = ({ isAuthenticated, setIsAuthenticated, logoutUser }) => {
         // elapsed Time since login in milliseconds
         const elapsedTime = Date.now() - parseInt(loginTime, 10);
         console.log(elapsedTime);
-        if (elapsedTime > 1 * 60 * 1000) {
+        if (elapsedTime > 120 * 60 * 1000) {
           logoutUser();
         } else {
           // Set a timeout for the remaining time
