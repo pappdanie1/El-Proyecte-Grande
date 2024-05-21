@@ -5,7 +5,7 @@ import Schedule from "./Schedule";
 import Loading from "./Loading";
 import { useState, useEffect } from "react";
 
-function MovieInfo({data, screenings}) {
+function MovieInfo({data, screenings, handleSelectDay, selectedDay, filteredScreenings}) {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
 
@@ -66,10 +66,10 @@ function MovieInfo({data, screenings}) {
       <div className="movie-details-container">
         <div className="Screenings">
           <h2>Buy your tickets</h2>
-          <Schedule data={data}/>
+          <Schedule data={data} screenings={screenings} handleSelectDay={handleSelectDay} selectedDayFrom={selectedDay} filteredScreenings={filteredScreenings}/>
           <hr className="divider" />
           <h4 className="screenings-today" >Screenings today:</h4>
-          <Screenings screenings={screenings} movie={movie}/>
+          <Screenings screenings={filteredScreenings} movie={movie}/>
         </div>
       </div>
     </>
