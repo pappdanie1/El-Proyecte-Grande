@@ -24,6 +24,24 @@ function App() {
   const [screening, setScreening] = useState();
   const [seats, setSeats] = useState([]);
 
+  const [selectedDay, setSelectedDay] = useState(new Date().getDay() + 1);
+
+  const handleSelectDay = (dayIndex) => {
+    setSelectedDay(dayIndex);
+  };
+
+  const filterScreeningsByDay = (screenings, dayIndex) => {
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const dayName = dayNames[dayIndex];
+    return screenings.filter(screening => {
+      const screeningDate = new Date(screening.start);
+      return screeningDate.toLocaleDateString('en-US', { weekday: 'long' }) === dayName;
+    });
+  };
+
+  const filteredScreenings = filterScreeningsByDay(screenings, selectedDay);
+  console.log(filteredScreenings);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("/api/Movie");
@@ -51,11 +69,11 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Home data={data} screenings={screenings} />}
+          element={<Home data={data} screenings={screenings} handleSelectDay={handleSelectDay} selectedDay={selectedDay} filteredScreenings={filteredScreenings}/>}
         />
         <Route
           path="movieDetails/:movieId"
-          element={<MovieDetails data={data} screenings={screenings} />}
+          element={<MovieDetails data={data} screenings={screenings} handleSelectDay={handleSelectDay} selectedDay={selectedDay} filteredScreenings={filteredScreenings}/>}
         />
         <Route
           path="/register"
