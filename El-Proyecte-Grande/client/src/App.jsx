@@ -13,6 +13,9 @@ import Auditorium from "./Components/Auditorium";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Redirect from "./Pages/Redirect/Redirect";
 import Profile from "./Pages/Profile/Profile";
+import About from "./Pages/About/About";
+import Pricing from "./Pages/Pricing/Pricing";
+import Offers from "./Pages/Offers/Offers";
 
 function App() {
   const [data, setData] = useState([]);
@@ -100,6 +103,9 @@ function App() {
             />
           }
         />
+        <Route path="/about" element={<About/>}/>
+        <Route path="/pricing" element={<Pricing/>}/>
+        <Route path="/offers" element={<Offers/>}/>
         <Route
           path="movieDetails/:movieId"
           element={

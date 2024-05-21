@@ -42,13 +42,13 @@ const Header = ({ isAuthenticated, setIsAuthenticated, logoutUser }) => {
             <a href="/">Now Playing</a>
           </li>
           <li>
-            <a href="#">Offers</a>
+            <a href="/offers">Offers</a>
           </li>
           <li>
-            <a href="#">Pricing</a>
+            <a href="/pricing">Pricing</a>
           </li>
           <li>
-            <a href="#">About</a>
+            <a href="/about">About</a>
           </li>
         </ul>
       </div>
