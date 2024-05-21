@@ -1,5 +1,5 @@
 import "./Component_css/Schedule.css";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const Schedule = (props) => {  
   const currentDay = new Date().getDay() + 1; 

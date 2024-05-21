@@ -85,7 +85,7 @@ function Auditorium({ setScreening, screening, seats, setSeats, selectedSeats, s
             </div>
           ))}
         </div>
-        <Link to="/reservation" className="screening-time" >Reserve</Link>
+        <Link to="/reservation" className="reserve-btn" >Reserve</Link>
       </div>
     </div>
   );
