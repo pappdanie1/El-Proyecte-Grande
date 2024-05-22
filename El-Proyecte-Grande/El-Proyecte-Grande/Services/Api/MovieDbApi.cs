@@ -15,7 +15,7 @@ public class MovieDbApi : IMovieDbApi
 
     public async Task<string> GetMovies()
     {
-        var API_KEY = _configuration["MovieDbApiKey"];
+        var API_KEY = Environment.GetEnvironmentVariable("MOVIEDB_API_KEY") ?? _configuration["MovieDbApiKey"];
         var API_URL = $"https://api.themoviedb.org/3/movie/now_playing?api_key={API_KEY}&language=en-US&page=1";
         
         using var client = new HttpClient();

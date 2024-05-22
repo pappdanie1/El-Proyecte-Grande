@@ -33,8 +33,8 @@ public class TokenService : ITokenService
     private JwtSecurityToken CreateJwtToken(List<Claim> claims, SigningCredentials credentials,
         DateTime expiration) =>
         new(
-            _configuration["JwtSettings:ValidIssuer"],
-            _configuration["JwtSettings:ValidAudience"],
+            Environment.GetEnvironmentVariable("VALIDISSUER") ?? _configuration["JwtSettings:ValidIssuer"],
+            Environment.GetEnvironmentVariable("VALIDAUDIENCE") ?? _configuration["JwtSettings:ValidAudience"],
             claims,
             expires: expiration,
             signingCredentials: credentials
@@ -72,7 +72,7 @@ public class TokenService : ITokenService
     {
         return new SigningCredentials(
             new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_configuration["SigningKey:IssuerSigningKey"])
+                Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("ISSUERSIGNINGKEY") ?? _configuration["SigningKey:IssuerSigningKey"])
             ),
             SecurityAlgorithms.HmacSha256
         );

@@ -14,52 +14,6 @@ public class SeedScreenings : ISeedScreenings
         _movieDbContext = context;
     }
 
-    /*
-    public async Task<List<Screening>> Seed()
-    {
-        Random random = new Random();
-        var screenings = new List<Screening>();
-
-        if (!_movieDbContext.Screenings.Any())
-        {
-            var movies = await _movieDbContext.Movies.ToListAsync();
-            var auditoriums = await _movieDbContext.Auditoriums.ToListAsync();
-
-            var tomorrow = DateTime.Today.AddDays(1);
-
-            var startTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0);
-            var endTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 22, 0, 0);
-
-            var currentAuditoriumIndex = 0;
-
-            foreach (var movie in movies)
-            {
-                var currentAuditorium = auditoriums[currentAuditoriumIndex];
-
-                var currentTime = startTime;
-
-                while (currentTime < endTime)
-                {
-                    screenings.Add(new Screening
-                    {
-                        Movie = movie,
-                        Auditorium = currentAuditorium,
-                        Start = currentTime
-                    });
-
-                    currentTime = currentTime.AddHours(random.Next(1, 4) * 3);
-                }
-
-                currentAuditoriumIndex = (currentAuditoriumIndex + 1) % auditoriums.Count;
-            }
-        }
-
-        return screenings;
-    }
-     */
-
-    //for 7 days
-
     public async Task<List<Screening>> Seed()
     {
         var screenings = new List<Screening>();

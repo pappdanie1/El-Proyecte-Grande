@@ -29,29 +29,20 @@ using (var scope = app.Services.CreateScope())
     
     var services = scope.ServiceProvider;
     var dbContext = services.GetService<AspCinemaContext>();
-    /*
-    dbContext!.Database.EnsureDeleted();
-    dbContext.Database.EnsureCreated();
-    */
     
     var authenticationSeeder = scope.ServiceProvider.GetRequiredService<AuthenticationSeeder>();
+    //scope.ServiceProvider.GetService<AspCinemaContext>().Database.Migrate();
     authenticationSeeder.AddRoles();
     authenticationSeeder.AddAdmin();
     
     dbContext.Seed();
 }
 
-
-
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-//app.UseRouting();
 
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
@@ -124,24 +115,31 @@ void AddDbContext()
 
 void AddAuthentication()
 {
-    builder.Services
-        .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters()
-            {
-                ClockSkew = TimeSpan.Zero,
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = builder.Configuration["JwtSettings:ValidIssuer"],
-                ValidAudience = builder.Configuration["JwtSettings:ValidAudience"],
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(builder.Configuration["SigningKey:IssuerSigningKey"])
-                ),
-            };
-        });
+    var validIssuer = Environment.GetEnvironmentVariable("VALIDISSUER") ??
+                      builder.Configuration["JwtSettings:ValidIssuer"];
+    var validAudience = Environment.GetEnvironmentVariable("VALIDAUDIENCE") ??
+                        builder.Configuration["JwtSettings:ValidAudience"];
+    var issuerSigningKey = Environment.GetEnvironmentVariable("ISSUERSIGNINGKEY") ??
+                          builder.Configuration["SigningKey:IssuerSigningKey"];
+    
+                          builder.Services
+                              .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                              .AddJwtBearer(options =>
+                              {
+                                  options.TokenValidationParameters = new TokenValidationParameters()
+                                  {
+                                      ClockSkew = TimeSpan.Zero,
+                                      ValidateIssuer = true,
+                                      ValidateAudience = true,
+                                      ValidateLifetime = true,
+                                      ValidateIssuerSigningKey = true,
+                                      ValidIssuer = validIssuer,
+                                      ValidAudience = validAudience,
+                                      IssuerSigningKey = new SymmetricSecurityKey(
+                                          Encoding.UTF8.GetBytes(issuerSigningKey)
+                                      ),
+                                  };
+                              });
 }
 
 void AddIdentity()
@@ -160,3 +158,5 @@ void AddIdentity()
         .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<AspCinemaContext>();
 }
+
+public partial class Program { }

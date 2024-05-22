@@ -19,7 +19,7 @@ public class OmdbApi : IOmdbApi
 
     public async Task<List<string>> GetMovies()
     {
-        var API_KEY = _config["OmdbApiKey"];
+        var API_KEY = Environment.GetEnvironmentVariable("OMDB_API_KEY") ?? _config["OmdbApiKey"];
         var moviesData = await _movieDbApi.GetMovies();
         var movies = _jsonProcessor.ProcessTitles(moviesData);
         var movieDownloadString = new List<string>();
