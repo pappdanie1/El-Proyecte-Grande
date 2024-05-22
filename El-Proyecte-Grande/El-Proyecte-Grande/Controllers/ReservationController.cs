@@ -32,7 +32,18 @@ public class ReservationController : ControllerBase
     {
         try
         {
-            return Ok(_reservationRepository.GetAllByUser(username));
+            IList<Reservation> reservations = _reservationRepository.GetAllByUser(username);
+
+            foreach (var reserve in reservations)
+            {
+                foreach (var rs in reserve.ReservedSeats)
+                {
+                    rs.Screening = null;
+                    rs.Seat.Auditorium = null;
+                }
+            }
+            
+            return Ok(reservations);
         }
         catch (Exception e)
         {
