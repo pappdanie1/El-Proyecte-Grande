@@ -13,15 +13,6 @@ const Schedule = (props) => {
     "Saturday",
   ];
 
-  function addDays(date, days) {
-    const newDate = new Date(date);
-    newDate.setDate(date.getDate() + days);
-    return newDate;
-  }
-
-  const newDate = addDays(new Date(), props.selectedDayFrom - 2).toDateString();
-
-
   const reorderedDaysOfWeek = daysOfWeek.slice(currentDay).concat(daysOfWeek.slice(0, currentDay));
 
   const [selectedDay, setSelectedDay] = useState(currentDay);
@@ -44,17 +35,13 @@ const Schedule = (props) => {
           {reorderedDaysOfWeek.map((day, index) => (
              <button
              key={day}
-             className={selectedDay === (currentDay + index) % 7 ? "active" : ""}
+             className={selectedDay === (currentDay + index) % 7 ? "schedule-active" : "schedule-button"}
              onClick={() => handleDayClick(index)}
            >
              {day}
            </button>
           ))}
         </div>
-      </div>
-      <div className="date-info-container">
-        <p className="date-label">Date:</p>
-        <p className="today-date">{newDate}</p>
       </div>
     </div>
   );
