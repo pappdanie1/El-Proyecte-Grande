@@ -1,0 +1,39 @@
+
+name: .NET
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      VALIDISSUER: ${{ secrets.VALIDISSUER }}
+      VALIDAUDIENCE: ${{ secrets.VALIDAUDIENCE }}
+      ISSUERSIGNINGKEY: ${{ secrets.ISSUERSIGNINGKEY }}
+      CONNECTIONSTRINGS__DEFAULTCONNECTION: ${{ secrets.CONNECTIONSTRINGS__DEFAULTCONNECTION }}
+      ROLES_1: ${{ secrets.ROLES_1 }}
+      ROLES_2: ${{ secrets.ROLES_2 }}
+      MOVIEDB_API_KEY: ${{ secrets.MOVIEDB_API_KEY }}
+      OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies IntegrationTests
+      run: dotnet restore
+      working-directory: ./El-Proyecte-Grande/El-Proyecte-Grande-IntegrationTests
+    - name: Build IntegrationTests
+      run: dotnet build --no-restore
+      working-directory: ./El-Proyecte-Grande/El-Proyecte-Grande-IntegrationTests
+    - name: IntegrationTests
+      run: dotnet test --no-build --verbosity normal
+      working-directory: ./El-Proyecte-Grande/El-Proyecte-Grande-IntegrationTests
