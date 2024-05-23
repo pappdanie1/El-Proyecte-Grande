@@ -22,15 +22,6 @@ public class JsonProcessor : IJsonProcessor
             }
 
             var title = movie.GetProperty("original_title").GetString();
-            /* var item = new Movie
-                {
-                Title = movie.GetProperty("original_title").GetString(),
-                Director = null,
-                Cast = null,
-                Description = movie.GetProperty("overview").GetString(),
-                DurationInSec = null,
-                Poster = movie.GetProperty("poster_path").GetString()
-            }; */
             movies.Add(title);
             movieCount++;
         }

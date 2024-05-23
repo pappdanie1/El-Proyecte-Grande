@@ -14,7 +14,17 @@
   margin-right: 20px; /* Adjust the margin as needed */
 }
 
-.day-selector button {
+.schedule-active {
+  background-color: #0e5ea3ce;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 8px 16px;
+  margin-left: 10px;
+}
+
+.schedule-button {
   background-color: #074173;
   color: #fff;
   border: none;
@@ -24,7 +34,7 @@
   margin-left: 10px;
 }
 
-.day-selector button:hover {
+.schedule-button:hover {
   background-color: #074173ce;
 }
 
@@ -36,3 +46,5 @@
 .date-label {
   margin-bottom: 5px;
 }
+
+

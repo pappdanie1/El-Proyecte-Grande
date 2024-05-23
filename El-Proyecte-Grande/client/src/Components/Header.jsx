@@ -1,7 +1,8 @@
 import "./Component_css/Header.css";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
-const Header = ({ isAuthenticated, setIsAuthenticated }) => {
+const Header = ({ isAuthenticated, setIsAuthenticated, logoutUser }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -9,8 +10,24 @@ const Header = ({ isAuthenticated, setIsAuthenticated }) => {
     localStorage.removeItem('name');
     localStorage.removeItem('phone');
     localStorage.removeItem('username');
+    localStorage.removeItem("loginTime");
     setIsAuthenticated(false);
   }
+
+    // Check if token is expired
+    useEffect(() => {
+      const loginTime = localStorage.getItem("loginTime");
+      if (loginTime) {
+        // elapsed Time since login in milliseconds
+        const elapsedTime = Date.now() - parseInt(loginTime, 10);
+        if (elapsedTime > 120 * 60 * 1000) {
+          logoutUser();
+        } else {
+          // Set a timeout for the remaining time
+          setTimeout(logoutUser, 120 * 60 * 1000 - elapsedTime);
+        }
+      }
+    }, [isAuthenticated, logoutUser]);
 
   return (
     <nav className="navbar">
@@ -22,16 +39,16 @@ const Header = ({ isAuthenticated, setIsAuthenticated }) => {
       <div className="center">
         <ul className="nav-links">
           <li>
-            <a href="#">Now Playing</a>
+            <a href="/">Now Playing</a>
           </li>
           <li>
-            <a href="#">Offers</a>
+            <a href="/offers">Offers</a>
           </li>
           <li>
-            <a href="#">Pricing</a>
+            <a href="/pricing">Pricing</a>
           </li>
           <li>
-            <a href="#">About</a>
+            <a href="/about">About</a>
           </li>
         </ul>
       </div>

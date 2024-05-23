@@ -1,6 +1,6 @@
 import './Profile.css'
 import { useEffect, useState } from 'react'
-import { resolvePath, useParams} from 'react-router-dom'
+import { useParams} from 'react-router-dom'
 
 const Profile = () => {
   const { username } = useParams()
@@ -24,7 +24,7 @@ const Profile = () => {
     };
 
     fetchReservation();
-  }, []);
+  }, [username]);
 
   console.log(reservation)
 

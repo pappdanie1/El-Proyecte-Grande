@@ -1,8 +1,11 @@
+.pricing-container {
+  padding: 20px;
+}
+
 table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
-  display: flex;
-  justify-content: center;
 }
 
 td {
@@ -12,4 +15,6 @@ td {
   height: 60px; 
   width: 200px;
 }
+
+
 

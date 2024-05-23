@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 import Screenings from "./Screenings";
 import { useState} from "react";
 
-const Movie = ({ data, screenings }) => {
+const Movie = ({ data, screenings, handleSelectDay, selectedDay, filteredScreenings}) => {
   const [selectedMovieId, setSelectedMovieId] = useState("");
+
 
   if (!data) {
     return <Loading />;
@@ -22,7 +23,7 @@ const Movie = ({ data, screenings }) => {
   return (
     <>
       <h2 className="screenings-title">Now playing</h2>
-      <Schedule data={data} />
+      <Schedule data={data} screenings={screenings} handleSelectDay={handleSelectDay} selectedDayFrom={selectedDay} />
       <MovieDropdown movies={data} onSelectMovie={handleSelectMovie} />
       {selectedMovieId ? (
         <div className="movie-details-container">
@@ -41,7 +42,7 @@ const Movie = ({ data, screenings }) => {
             <p>
               <strong>Runtime: </strong> {selectedMovie.durationInSec}
             </p>
-            <Screenings screenings={screenings} movie={selectedMovie} />
+            <Screenings screenings={filteredScreenings} movie={selectedMovie} />
           </div>
         </div>
       ) : (
@@ -62,7 +63,7 @@ const Movie = ({ data, screenings }) => {
               <p>
                 <strong>Runtime: </strong> {movie.durationInSec}
               </p>
-              <Screenings screenings={screenings} movie={movie}/>
+              <Screenings screenings={filteredScreenings} movie={movie}/>
             </div>
           </div>
         ))

@@ -1,41 +1,53 @@
 .auditorium {
-    margin-top: 50px;
-  }
-  
-  .seats {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 10px;
-  }
-  
-  .seat-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .row-number {
-    margin-right: 10px;
-  }
-  
-  .seat {
-    width: 30px;
-    height: 30px;
-    background-color: #ccc;
-    border: 1px solid #888;
-    margin-right: 5px;
-    cursor: pointer;
-  }
-  
-  .seat.selected {
-    background-color: #07d400;
-  }
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
 
-  .audit-movie-title{
-    padding: 10px;
-  }
+.seats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 10px;
+}
 
-  .audit-screening-time{
-    padding: 10px;
-  }
+.seat-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.row-number {
+  margin-right: 10px;
+}
+
+.seat {
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+  border: 1px solid #888;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.seat.selected {
+  background-color: #07d400;
+}
+
+.audit-movie-title {
+  padding: 10px;
+}
+
+.audit-screening-time {
+  padding: 10px;
+}
+
+.reserve-btn {
+  background-color: #074173;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 8px 16px;
+  margin-left: 10px;
+}
