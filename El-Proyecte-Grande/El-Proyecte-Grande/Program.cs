@@ -31,7 +31,10 @@ using (var scope = app.Services.CreateScope())
     var dbContext = services.GetService<AspCinemaContext>();
     
     var authenticationSeeder = scope.ServiceProvider.GetRequiredService<AuthenticationSeeder>();
-    //scope.ServiceProvider.GetService<AspCinemaContext>().Database.Migrate();
+    if (dbContext.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+    {
+        scope.ServiceProvider.GetService<AspCinemaContext>().Database.Migrate();
+    }
     authenticationSeeder.AddRoles();
     authenticationSeeder.AddAdmin();
     
