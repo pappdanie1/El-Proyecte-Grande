@@ -23,7 +23,7 @@ To install and run the application locally, follow these steps:
 3. Run `docker-compose up` to set up the development environment.
 
 ## UML Diagram
-![UML Diagram](path-to-uml-diagram.png)
+![UML Diagram](db-tables.png)
 
 ## Contributors
 - [Daniel Papp](https://github.com/pappdanie1)
