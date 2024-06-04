@@ -26,10 +26,10 @@ public class SeedScreenings : ISeedScreenings
             // Generate screenings for the next 7 days
             for (int dayOffset = 1; dayOffset <= 7; dayOffset++)
             {
-                var tomorrow = DateTime.Today.AddDays(dayOffset);
+                var tomorrow = DateTime.UtcNow.Date.AddDays(dayOffset);
 
-                var startTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0);
-                var endTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 22, 0, 0);
+                var startTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0, DateTimeKind.Utc);
+                var endTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 22, 0, 0, DateTimeKind.Utc);
 
                 //var interval = TimeSpan.FromHours(3);
 
