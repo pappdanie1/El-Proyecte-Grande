@@ -18,3 +18,8 @@ p {
   line-height: 1.5;
   margin-bottom: 15px;
 }
+
+.contact-link a{
+  padding: 5px;
+  color: black;
+}

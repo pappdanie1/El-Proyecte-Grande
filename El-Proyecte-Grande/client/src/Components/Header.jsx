@@ -33,7 +33,7 @@ const Header = ({ isAuthenticated, setIsAuthenticated, logoutUser }) => {
     <nav className="navbar">
       <div className="left">
         <Link to="/">
-          <div className="cinema-name">Cinema</div>
+          <img className="header-logo"  src="/images/logo.png" alt="logo" />
         </Link>
       </div>
       <div className="center">

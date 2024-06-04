@@ -3,6 +3,7 @@ using El_Proyecte_Grande.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Abstractions;
 
 namespace El_Proyecte_Grande.Data;
 
@@ -74,9 +75,16 @@ public class AspCinemaContext : IdentityDbContext<ApplicationUser, IdentityRole,
             .OnDelete(DeleteBehavior.NoAction);
         
         modelBuilder.Entity<Screening>()
+            
             .HasOne(s => s.Movie)
             .WithMany(m => m.Screenings)
             .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<Screening>(entity =>
+        {
+            entity.Property(e => e.Start).HasColumnType("timestamptz");
+        });
+
     }
     
     public void Seed()

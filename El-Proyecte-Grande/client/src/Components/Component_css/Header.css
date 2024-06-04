@@ -179,3 +179,8 @@
 #checkbox:checked + .toggle {
   transform: rotate(-90deg);
 }*/
+
+.header-logo{
+  max-width: 100%;
+  height: 40.003px;
+}

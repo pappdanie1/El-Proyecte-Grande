@@ -27,7 +27,11 @@ const AboutPage = () => {
           experience.
         </p>
         <h2>Contact us</h2>
-        <p>...</p>
+          <div className="contact-link">
+            <a href="https://www.linkedin.com/in/andreanichter/">Andrea Nichter</a>
+            <a href="https://www.linkedin.com/in/pappdanie1/">Dániel Papp</a>
+            <a href="https://www.linkedin.com/in/csaba-gy00/">Csaba Győri</a>
+          </div>
       </div>
     </>
   );
