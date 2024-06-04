@@ -15,7 +15,7 @@ services:
     build:
       context: .
       dockerfile: El-Proyecte-Grande/Dockerfile
-    #image: pappdanie1/el-proyecte-grande-app:latest
+    image: pappdanie1/el-proyecte-grande-app:latest
     depends_on:
       - database
     environment:
@@ -32,7 +32,7 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
-    #image: pappdanie1/el-proyecte-grande-frontend:latest
+    image: pappdanie1/el-proyecte-grande-frontend:latest
     ports:
       - 5173:5173
     tty: true
