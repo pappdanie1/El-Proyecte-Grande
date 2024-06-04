@@ -109,7 +109,7 @@ void ConfigureSwagger()
 void AddDbContext()
 {
     var connectionString = Environment.GetEnvironmentVariable("CONNECTIONSTRINGS__DEFAULTCONNECTION") ?? 
-                           builder.Configuration.GetConnectionString("DefaultConnectionPSQL");
+                           builder.Configuration.GetConnectionString("DefaultConnection");
     
     builder.Services.AddDbContext<AspCinemaContext>(options =>
         options.UseNpgsql(connectionString)
