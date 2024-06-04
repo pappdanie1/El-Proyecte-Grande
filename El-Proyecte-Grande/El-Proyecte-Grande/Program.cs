@@ -108,12 +108,12 @@ void ConfigureSwagger()
 
 void AddDbContext()
 {
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    var connectionString = Environment.GetEnvironmentVariable("CONNECTIONSTRINGS__DEFAULTCONNECTION") ?? 
+                           builder.Configuration.GetConnectionString("DefaultConnectionPSQL");
+    
     builder.Services.AddDbContext<AspCinemaContext>(options =>
-        options.UseSqlServer(connectionString, sqlOption =>
-        {
-            sqlOption.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-        }));
+        options.UseNpgsql(connectionString)
+    );
 }
 
 void AddAuthentication()
