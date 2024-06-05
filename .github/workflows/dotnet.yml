@@ -49,13 +49,10 @@ jobs:
         docker-compose -f docker-compose.yml build
         docker-compose -f docker-compose.yml push
       working-directory: ./El-Proyecte-Grande
-
-  redeploy-on-render:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Redeploy backend service
-        run: |
-            curl ${{ secrets.RENDER_BACKEND_URL }}
-      - name: Redeploy frontend service
-        run: |
+    - name: Redeploy backend service
+      run: |
+           curl ${{ secrets.RENDER_BACKEND_URL }}
+    - name: Redeploy frontend service
+      run: |
             curl ${{ secrets.RENDER_FRONTEND_URL }}
+
