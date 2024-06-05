@@ -58,4 +58,4 @@ jobs:
             curl ${{ secrets.RENDER_BACKEND_URL }}
       - name: Redeploy frontend service
         run: |
-            curl $ {{ secrets.RENDER_FRONTEND_URL }}
+            curl ${{ secrets.RENDER_FRONTEND_URL }}
