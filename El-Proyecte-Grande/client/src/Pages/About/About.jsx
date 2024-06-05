@@ -17,7 +17,7 @@ const AboutPage = () => {
         <p>
           We utilized Entity Framework and Identity frameworks for the backend,
           providing seamless data management and user authentication. Our
-          database runs on Microsoft SQL Server.
+          database runs on PostgreSQL.
         </p>
         <h2>Frontend</h2>
         <p>
